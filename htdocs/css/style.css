@@ -1,0 +1,107 @@
+/*
+* importerar de lessmoduler ur foldern modules som skall bygga upp
+* style.css filen
+*/
+.navbar-wrap .navbar {
+  background-color: #3a3c5e;
+}
+.navbar-wrap .navbar a.navactive {
+  color: white;
+}
+.navbar-wrap .navbar a.navactive:hover {
+  color: white;
+}
+.navbar-wrap .navbar a.notnavactive:hover {
+  color: #b8b8b8;
+}
+.navbar-wrap .navbar-nav > li > .dropdown-menu {
+  background-color: #3a3c5e;
+}
+.navbar-wrap .dropdown-menu > li > a:hover {
+  background-color: #4e5074;
+  color: white;
+}
+.navbar-wrap .dropdown-menu > li > a {
+  color: #b8b8b8;
+}
+.navbar-wrap .navbar-default .navbar-nav > li > a:hover {
+  color: white;
+}
+.main-wrap hr {
+  border-top: 1px solid #b3b3b3;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover {
+  background-color: #3a3c5e;
+}
+.main-wrap {
+  min-height: 700px;
+  padding: 0 20px;
+  margin-bottom: 50px;
+  margin-top: 70px;
+  margin-left: 16.6667%;
+  width: 66.6667%;
+}
+.main-wrap .pillow-100 {
+  height: 100px;
+}
+.main-wrap .pillow-20 {
+  height: 20px;
+}
+.main-wrap .commenttable td {
+  height: 30px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.main-wrap .commenttable .avatarcolumn {
+  width: 60px;
+}
+.main-wrap .commenttable .commentaryunderline {
+  border-bottom: 1px solid #b5b6c0;
+}
+.main-wrap .commenttable .commentarydottedunderline {
+  border-bottom: 1px dotted lightgray;
+}
+.main-wrap .commenttable .likecircle {
+  border-radius: 50%;
+  width: 35px;
+  background: transparent;
+  height: 35px;
+  color: black;
+  padding-top: 6px;
+  padding-left: 6px;
+}
+.footer-wrap .footer {
+  height: 200px;
+  background-color: #3a3c5e;
+}
+.footer-wrap .footer p {
+  color: white;
+}
+.footer-wrap .footer .footerpart {
+  padding: 20px;
+  color: #b8b8b8;
+}
+.footer-wrap .footer .footerpart a {
+  color: #e9ae61;
+}
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+textarea:focus {
+  background: #f9dffe;
+  color: #0d0d0d;
+}
+.tags {
+  font-size: 10px;
+  background-color: #c3c3c3;
+  padding: 2px;
+  color: #3e3e3e;
+}
+.floatright {
+  float: right;
+}
+.author {
+  font-size: 10px;
+}

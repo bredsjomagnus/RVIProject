@@ -1,0 +1,50 @@
+/**
+ * Show grid.
+ */
+ /* maxWidth: 1100px */
+// .showGrid(@maxWidth: 960px) {
+.showGrid(@maxWidth: 100%) {
+
+    background: url(../img/grid/grid960x12x60x20.png) repeat-y fixed center center;
+    background-size: 100% auto;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: @maxWidth;
+
+    @media (min-width: @maxWidth) {
+        background-size: @maxWidth auto;
+    }
+}
+
+// .showTypoGrid() {
+//     background: url(../img/grid/typogrid-960x24.png) repeat-y fixed center center;
+//     background-size: 100% auto;
+//     margin-left: auto;
+//     margin-right: auto;
+    // height: 24px;
+
+    // @media (min-width: @maxWidth) {
+    //     background-size: @maxWidth auto;
+    // }
+// }
+
+/*
+* Funkar med känns inte helt rätt ändå
+*/
+.showTypoGrid(@linecolor, @typoGridHeight: @magicNumber) {
+    // @linecolor: #b3b3b3;
+    // @linecolor: white;
+    background-size: 100% @typoGridHeight;
+
+
+    background-image: -webkit-linear-gradient(@linecolor 0%, transparent 7%, transparent 100%);
+    background-image: -moz-linear-gradient(@linecolor 0%, transparent 7%, transparent 100%);
+    background-image: -ms-linear-gradient(@linecolor 0%, transparent 7%, transparent 100%);
+    background-image: -o-linear-gradient(@linecolor 0%, transparent 7%, transparent 100%);
+    // background-image: linear-gradient(lightgray 0%, transparent 7%, transparent 100%);
+
+    // background: -webkit-linear-gradient(center top , #9E9E9E, #454545) repeat scroll 0 0 transparent;
+    // background:    -moz-linear-gradient(center top , #9E9E9E, #454545) repeat scroll 0 0 transparent;
+    // background:     -ms-linear-gradient(center top , #9E9E9E, #454545) repeat scroll 0 0 transparent;
+    // background:      -o-linear-gradient(center top , #9E9E9E, #454545) repeat scroll 0 0 transparent;
+}
