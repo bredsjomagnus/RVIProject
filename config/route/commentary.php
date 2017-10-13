@@ -17,6 +17,12 @@ return [
             "callable" => ["commController", "addAnswerProcess"]
         ],
         [
+            "info" => "Lägg till kommentar på en fråga",
+            "requestMethod" => "get|post",
+            "path" => "addarticlecommentprocess",
+            "callable" => ["commController", "addArticleCommentProcess"]
+        ],
+        [
             "info" => "Lägg till kommentar",
             "requestMethod" => "get|post",
             "path" => "createcomment",

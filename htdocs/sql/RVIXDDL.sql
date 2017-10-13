@@ -2,8 +2,10 @@
 
 use RVIProject;
 
-DROP TABLE IF EXISTS RVIXanswer;
-DROP TABLE IF EXISTS RVIXarticle;
+-- DROP TABLE IF EXISTS RVIXanswer;
+-- DROP TABLE IF EXISTS RVIXarticlecomment;
+DROP TABLE IF EXISTS RVIXanswercomment;
+-- DROP TABLE IF EXISTS RVIXarticle;
 
 -- DROP TABLE IF EXISTS RVIXaccount;
 
@@ -62,5 +64,33 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      
      PRIMARY KEY  (id),
      FOREIGN KEY (answerto) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (user) REFERENCES RVIXaccount (id)
+  ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  
+  CREATE TABLE IF NOT EXISTS RVIXarticlecomment (
+     id INT AUTO_INCREMENT NOT NULL,
+     commentto INT,
+     user INT,
+     `data` TEXT,
+	 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated TIMESTAMP NULL,
+     deleted TIMESTAMP NULL,
+     
+     PRIMARY KEY  (id),
+     FOREIGN KEY (commentto) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (user) REFERENCES RVIXaccount (id)
+  ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  
+  CREATE TABLE IF NOT EXISTS RVIXanswercomment (
+     id INT AUTO_INCREMENT NOT NULL,
+     commentto INT,
+     user INT,
+     `data` TEXT,
+	 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated TIMESTAMP NULL,
+     deleted TIMESTAMP NULL,
+     
+     PRIMARY KEY  (id),
+     FOREIGN KEY (commentto) REFERENCES RVIXarticle (id),
      FOREIGN KEY (user) REFERENCES RVIXaccount (id)
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

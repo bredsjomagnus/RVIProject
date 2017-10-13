@@ -3,7 +3,7 @@
         <h3>SKAPA INNEHÅLL PÅ SIDAN</h3>
         <div class="row">
             <div class="col-md-12">
-                <a href=<?= $this->di->get("url")->create("commentary/commentary") ?>>Tillbaka</a>
+                <a href=<?= $this->di->get("url")->create("commentary/articles/alla") ?>>Tillbaka</a>
                 <!-- <a href=<?= $this->di->get("url")->create("admincontent/create") ?>>Allt innehåll</a> -->
                 <!-- <a href=<?= $this->di->get("url")->create("book/delete") ?>>Ta bort böcker</a> -->
             </div>

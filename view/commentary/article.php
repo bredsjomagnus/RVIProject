@@ -4,11 +4,14 @@ namespace Anax\View;
 
 use \Anax\User\User;
 
-$db         = $this->di->get("db");
-$session    = $this->di->get("session");
-$userid     = $session->get("userid");
+$db                     = $this->di->get("db");
+$session                = $this->di->get("session");
+$userid                 = $session->get("userid");
+$addanswercommenturl = url('commentary/addarticlecommentprocess');
+// $addanswercomment = "<a id='addanswercomment' href='commentary/addanswercomment?userid=".$userid."&articleid=".$article['article']->id."'</a>+ lägg till kommentar</a>";
+$addanswercomment = "<a id='addanswercomment' href='#'</a>+ lägg till kommentar</a>";
 
-$addanswercomment = "<a href='commentary/addanswercomment?userid=".$userid."&articleid=".$article['article']->id."'</a>+ lägg till kommentar</a>";
+
 
 $author = new User();
 $author->setDb($db);
@@ -41,22 +44,44 @@ $author->find("id", $article['article']->user);
         </div>
     </div>
     <br>
+    <div class="row">
+        <?php if($hasAnswerComments) : ?>
+            <div class="col-md-8 answercommentdiv">
+                <table class='answercommenttable'>
+                <?php foreach($answercomments as $answercomment) : ?>
+                    <?php
+                    $answercommentauthor = new User();
+                    $answercommentauthor->setDb($db);
+                    $answercommentauthor->find('id', $answercomment->user);
+                    ?>
+
+                    <tr>
+                        <td class='answercomment'><?= $answercomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td class='answercommentauthor' valign='top' align='right'><?= $answercomment->created ?> - <a><?= $answercommentauthor->username ?></a></td>
+                    </tr>
+                <?php endforeach; ?>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
     <br>
-    <br>
+    <!-- ARTIKELKOMMENTAR -->
     <div class="row">
         <div class="col-md-12">
-            <?= $addanswercomment ?>
+            <!-- ADD COMMENT COLLAPSE -->
+            <a class='commentcollapsepointer' data-toggle="collapse" data-target="#addarticlecomment">+ Lägg till kommentar</a>
+            <div id="addarticlecomment" class="collapse">
+                <form action='<?= $addanswercommenturl ?>' method="POST">
+                    <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
+                    <br />
+                    <input type='hidden' name='user' value='<?= $userid ?>'>
+                    <input type='hidden' name='commentto' value='<?= $article['article']->id ?>'>
+                    <input class='btn btn-default' type='submit' name='addarticlecommentbtn' value='Lägg till kommentar'>
+                </form>
+            </div>
         </div>
     </div>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Ditt svar</h4>
-            <?= $form ?>
-        </div>
-    </div>
-    <br>
+
     <br>
     <br>
     <table class='answertable'>
@@ -124,8 +149,38 @@ $author->find("id", $article['article']->user);
                             <td class='commentaryunderline'></td>
                             <td class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$answeruser->username?>, <?= $answeruser->email ?></i></td>
                         </tr>
+                        <!-- SVARSKOMMENTARKOMMENTAR -->
+
+
+                        <!-- ADD COMMENT COLLAPSE -->
+                        <tr>
+                            <td colspan=2><a class='commentcollapsepointer' data-toggle="collapse" data-target="#addanswercomment<?=$answeruser->id?>">+ Lägg till kommentar</a></td>
+                        </tr>
+
+
+
+                        <tr>
+                            <td colspan=2>
+                                <div id="addanswercomment<?=$answeruser->id?>" class="collapse">
+                                    <form action='<?= $addanswercommenturl ?>' method="POST">
+                                        <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
+                                        <br />
+                                        <input type='hidden' name='user' value='<?= $userid ?>'>
+                                        <input type='hidden' name='commentto' value='<?= $answeruser->id ?>'>
+                                        <input class='btn btn-default' type='submit' name='addanswercommentbtn' value='Lägg till kommentar'>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+
         <?php endforeach; ?>
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Ditt svar</h4>
+            <?= $form ?>
+        </div>
+    </div>
 
 </div>

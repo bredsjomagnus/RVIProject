@@ -5,4 +5,6 @@ SELECT * FROM RVIXarticle;
 
 SELECT * FROM RVIXanswer;
 
+SELECT * FROM RVIXarticlecomment;
+
 SELECT * FROM RVIXaccount;
