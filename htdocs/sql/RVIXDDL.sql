@@ -3,7 +3,7 @@
 use RVIProject;
 
 DROP TABLE IF EXISTS RVIXanswer;
--- DROP TABLE IF EXISTS RVIXarticle;
+DROP TABLE IF EXISTS RVIXarticle;
 
 -- DROP TABLE IF EXISTS RVIXaccount;
 

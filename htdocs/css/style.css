@@ -49,21 +49,21 @@
 .main-wrap .pillow-20 {
   height: 20px;
 }
-.main-wrap .commenttable td {
+.main-wrap .answertable td {
   height: 30px;
   padding-bottom: 10px;
   padding-top: 10px;
 }
-.main-wrap .commenttable .avatarcolumn {
+.main-wrap .answertable .avatarcolumn {
   width: 60px;
 }
-.main-wrap .commenttable .commentaryunderline {
+.main-wrap .answertable .commentaryunderline {
   border-bottom: 1px solid #b5b6c0;
 }
-.main-wrap .commenttable .commentarydottedunderline {
+.main-wrap .answertable .commentarydottedunderline {
   border-bottom: 1px dotted lightgray;
 }
-.main-wrap .commenttable .likecircle {
+.main-wrap .answertable .likecircle {
   border-radius: 50%;
   width: 35px;
   background: transparent;

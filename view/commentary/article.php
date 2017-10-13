@@ -1,17 +1,65 @@
 <?php
 
+namespace Anax\View;
+
 use \Anax\User\User;
 
-$db = $this->di->get("db");
+$db         = $this->di->get("db");
+$session    = $this->di->get("session");
+$userid     = $session->get("userid");
+
+$addanswercomment = "<a href='commentary/addanswercomment?userid=".$userid."&articleid=".$article['article']->id."'</a>+ lägg till kommentar</a>";
+
+$author = new User();
+$author->setDb($db);
+$author->find("id", $article['article']->user);
 ?>
 
 <div class="container">
-    <!-- <h4>TESTGROUND</h4> -->
-    <!-- <?= var_dump($article) ?> -->
-    <h2><?= $article['article']->title ?></h2>
-    <?= $article['articledata']->text ?>
-    <?= $form ?>
-    <table class='commenttable'>
+    <a href='<?= url('commentary/articles/alla')?>'>Tillbaka</a>
+    <div class="row">
+        <div class="col-md-8">
+            <h2><?= $article['article']->title ?></h2>
+            <?= $article['articledata']->text ?>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <?php
+            $edit = "";
+            if($article['article']->user == $session->get('userid')) {
+                $edit = " - <a href='".url('commentary/updatearticle/'.$article['article']->id)."'>Ändra</a>";
+            }
+            ?>
+            <?php foreach(explode(", ", $article['article']->tags) as $tag) : ?>
+                <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
+            <?php endforeach; ?>
+        </div>
+        <div class="col-md-5">
+            <span class='author'>Ställd <?= substr($article['article']->created, 0, 16) ?> av <a href='#'><?= $author->username ?></a><?= $edit ?></span>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <?= $addanswercomment ?>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Ditt svar</h4>
+            <?= $form ?>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <table class='answertable'>
         <thead>
             <tr>
                 <th class='avatarcolumn'>
@@ -21,12 +69,12 @@ $db = $this->di->get("db");
         <tbody>
         <?php foreach ($answers as $answer) : ?>
             <?php
-            $user = new User();
-            $user->setDb($db);
-            $user->find("id", $answer->user);
+            $answeruser = new User();
+            $answeruser->setDb($db);
+            $answeruser->find("id", $answer->user);
 
             $default = "http://i.imgur.com/CrOKsOd.png"; // Optional
-            $gravatar = new \Maaa16\Gravatar\Gravatar(($user->email !== null) ? $user->email : 'na@na.na', $default);
+            $gravatar = new \Maaa16\Gravatar\Gravatar(($answeruser->email !== null) ? $answeruser->email : 'na@na.na', $default);
             $gravatar->size = 50;
             $gravatar->rating = "G";
             $gravatar->border = "FF0000";
@@ -74,7 +122,7 @@ $db = $this->di->get("db");
                         </tr>
                         <tr>
                             <td class='commentaryunderline'></td>
-                            <td class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$user->username?>, <?= $user->email ?></i></td>
+                            <td class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$answeruser->username?>, <?= $answeruser->email ?></i></td>
                         </tr>
         <?php endforeach; ?>
         </tbody>

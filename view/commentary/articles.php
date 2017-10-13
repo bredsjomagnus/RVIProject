@@ -3,13 +3,16 @@ namespace Anax\View;
 
 use \Anax\User\User;
 
-$db = $this->di->get("db");
-
+$db         = $this->di->get("db");
+$session    = $this->di->get("session");
 ?>
 <div class="container">
     <div class="row">
+
         <div class="col-md-12">
+            <p><a href='<?= url('commentary/articles/alla') ?>'>Alla frågor</a></p>
             <h4>Frågor - <?= $tag ?></h4>
+
         </div>
     </div>
     <div class="row">
@@ -40,7 +43,7 @@ $db = $this->di->get("db");
                                 <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
                             <?php endforeach; ?>
                             <br />
-                            <span class='floatright author'>Ställd <?= $article->created ?> av <a href='#'><?= $user->username ?></a></span>
+                            <span class='floatright author'>Ställd <?= substr($article->created, 0, 16) ?> av <a href='#'><?= $user->username ?></a></span>
                         </td>
                         <!-- <td></td> -->
                     </tr>
