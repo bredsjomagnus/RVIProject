@@ -208,6 +208,14 @@ return [
                 return $obj;
             }
         ],
+        "dbtest" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Database\DatabaseQueryBuilder();
+                $obj->configure("databaseconfig.php");
+                return $obj;
+            }
+        ],
         "admin" => [
             "shared" => true,
             "callback" => function () {
