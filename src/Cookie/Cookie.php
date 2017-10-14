@@ -39,7 +39,7 @@ class Cookie
     /**
      * Retrieve a cookie
      * @param $key string The key to get from $_COOKIE
-     * @param $default optional The return value if not found
+     * @param $default The return value if not found
      * @return string The cookie if present, else $default
      */
     public function get($key, $default = false)
@@ -55,7 +55,7 @@ class Cookie
      */
     public function dump()
     {
-        var_dump($_COOKIE);
+        // var_dump($_COOKIE);
     }
 
     /**
