@@ -20,9 +20,25 @@ $author->find("id", $article['article']->user);
 ?>
 
 <div class="container">
-    <a href='<?= url('commentary/articles/alla')?>'>Tillbaka</a>
+
     <div class="row">
-        <div class="col-md-8">
+
+        <div class="col-md-12">
+            <div class="btn-group" role="group" aria-label="...">
+                <a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla frågor</a>
+                <?php foreach($populartags as $populartag) : ?>
+                    <a class='tags' href='<?= url('commentary/articles/'.$populartag->tag) ?>'><?= $populartag->tag ?></a>
+                <?php endforeach; ?>
+            </div>
+            <br>
+            <br>
+            <a href='<?= url('commentary/articles/alla')?>'>Tillbaka</a>
+            <!-- <h4>Frågor - <?= $tag ?></h4> -->
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
             <h2><?= $article['article']->title ?></h2>
             <?= $article['articledata']->text ?>
         </div>
@@ -58,7 +74,7 @@ $author->find("id", $article['article']->user);
 
                     <tr>
                         <td class='articlecomment'><?= $articlecomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class='articlecommentauthor' valign='top' align='right'><?= $articlecomment->created ?> - <a><?= $articlecommentauthor->username ?></a></td>
+                        <td class='articlecommentauthor articlecomment' valign='top' align='right'><?= $articlecomment->created ?> - <a><?= $articlecommentauthor->username ?></a></td>
                     </tr>
                 <?php endforeach; ?>
                 </table>
@@ -88,121 +104,127 @@ $author->find("id", $article['article']->user);
 
     <br>
     <br>
-    <table class='answertable'>
-        <thead>
-            <tr>
-                <th class='avatarcolumn'>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($answers as $answer) : ?>
-            <?php
-            $answeruser = new User();
-            $answeruser->setDb($db);
-            $answeruser->find("id", $answer->user);
+    <div class="row">
+        <div class="col-md-8">
+            <table class='answertable'>
+                <thead>
+                    <tr>
+                        <th class='avatarcolumn'></th>
+                        <th class='answersecondcolumn'></th>
+                        <th class='answerthirdcolumn'></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($answers as $answer) : ?>
+                    <?php
+                    $answeruser = new User();
+                    $answeruser->setDb($db);
+                    $answeruser->find("id", $answer->user);
 
-            $default = "http://i.imgur.com/CrOKsOd.png"; // Optional
-            $gravatar = new \Maaa16\Gravatar\Gravatar(($answeruser->email !== null) ? $answeruser->email : 'na@na.na', $default);
-            $gravatar->size = 50;
-            $gravatar->rating = "G";
-            $gravatar->border = "FF0000";
-            $filteredcomment = $this->di->get("textfilter")->markdown($answer->data);
-            $answerlikes = explode(",", $answer->likes);
-            $likeanswereditline = "";
-            if ($this->di->get("session")->get('userid') == $answer->user) {
-                $editcommenturl = $this->di->get("url")->create("editcomment") ."?id=". $answer->id;
-                $likeanswereditline = "<a href='".$editcommenturl."'>redigera</a>";
-            } else if ($this->di->get("session")->has('user')) {
-                $addlikeprocessurl = $this->di->get("url")->create("addlikeprocess")."?userid=".$this->di->get("session")->get('userid')."&commentid=".$answer->id;
-                if (!in_array($this->di->get("session")->get('userid'), $answerlikes)) {
-                    $likeanswereditline = "<a href='".$addlikeprocessurl."'>Gilla</a>&nbsp&nbsp&nbsp";
-                } else {
-                    $likeanswereditline = "<span>Gilla</span>&nbsp&nbsp&nbsp";
-                }
-            }
-            $updated = "";
-            if ($answer->updated !== null) {
-                $updated = "<span class='text-muted'>REDIGERAD: " . $answer->updated."</span>";
-                $likeanswereditline .= "&nbsp&nbsp&nbsp".$updated;
-            }
+                    $default = "http://i.imgur.com/CrOKsOd.png"; // Optional
+                    $gravatar = new \Maaa16\Gravatar\Gravatar(($answeruser->email !== null) ? $answeruser->email : 'na@na.na', $default);
+                    $gravatar->size = 50;
+                    $gravatar->rating = "G";
+                    $gravatar->border = "FF0000";
+                    $filteredcomment = $this->di->get("textfilter")->markdown($answer->data);
+                    $answerlikes = explode(",", $answer->likes);
+                    $likeanswereditline = "";
+                    if ($this->di->get("session")->get('userid') == $answer->user) {
+                        $editcommenturl = $this->di->get("url")->create("editcomment") ."?id=". $answer->id;
+                        $likeanswereditline = "<a href='".$editcommenturl."'>redigera</a>";
+                    } else if ($this->di->get("session")->has('user')) {
+                        $addlikeprocessurl = $this->di->get("url")->create("addlikeprocess")."?userid=".$this->di->get("session")->get('userid')."&commentid=".$answer->id;
+                        if (!in_array($this->di->get("session")->get('userid'), $answerlikes)) {
+                            $likeanswereditline = "<a href='".$addlikeprocessurl."'>Gilla</a>&nbsp&nbsp&nbsp";
+                        } else {
+                            $likeanswereditline = "<span>Gilla</span>&nbsp&nbsp&nbsp";
+                        }
+                    }
+                    $updated = "";
+                    if ($answer->updated !== null) {
+                        $updated = "<span class='text-muted'>REDIGERAD: " . $answer->updated."</span>";
+                        $likeanswereditline .= "&nbsp&nbsp&nbsp".$updated;
+                    }
 
-            $numberlikes = "";
-            // $likersusernames = "";
-            // if (count($answerlikes) > 0 && $answerlikes[0] != "") {
-            //     $likersusernames = $this->di->get("comm")->getLikersUsernames($answerlikes);
-            //     $numberlikes = "<div class='likecircle' data-toggle='tooltip' data-placement='right' title='".$likersusernames."'>+".count($answerlikes)."</div>";
-            // }
-            ?>
-            <tr>
-                            <td valign=top><?=$gravatar->toHTML()?></td>
-                            <td colspan=2><?=$filteredcomment?></td>
-                        </tr>
-                        <tr class='commentarydottedunderline' >
-                            <td></td>
-                            <td colspan=2>
-                                <?=$numberlikes?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td colspan=2><?=$likeanswereditline?></td>
-                        </tr>
-                        <tr>
-                            <td class='commentaryunderline'></td>
-                            <td colspan=2 class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$answeruser->username?>, <?= $answeruser->email ?></i></td>
-                        </tr>
-                        <!-- SVARSKOMMENTARKOMMENTAR -->
+                    $numberlikes = "";
+                    // $likersusernames = "";
+                    // if (count($answerlikes) > 0 && $answerlikes[0] != "") {
+                    //     $likersusernames = $this->di->get("comm")->getLikersUsernames($answerlikes);
+                    //     $numberlikes = "<div class='likecircle' data-toggle='tooltip' data-placement='right' title='".$likersusernames."'>+".count($answerlikes)."</div>";
+                    // }
+                    ?>
+                    <tr>
+                                    <td valign=top><?=$gravatar->toHTML()?></td>
+                                    <td colspan=2><?=$filteredcomment?></td>
+                                </tr>
+                                <tr class='commentarydottedunderline' >
+                                    <td></td>
+                                    <td colspan=2>
+                                        <?=$numberlikes?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td colspan=2><?=$likeanswereditline?></td>
+                                </tr>
+                                <tr>
+                                    <td class='commentaryunderline'></td>
+                                    <td colspan=2 class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$answeruser->username?>, <?= $answeruser->email ?></i></td>
+                                </tr>
+                                <!-- SVARSKOMMENTARKOMMENTAR -->
 
-                        <?php foreach($answercomments as $answercomment) : ?>
-                            <?php if($answercomment->commentto == $answer->user) : ?>
+                                <?php foreach($answercomments as $answercomment) : ?>
+                                    <?php if($answercomment->commentto == $answer->user) : ?>
+                                        <?php
+                                        $answercommentauthor = new User();
+                                        $answercommentauthor->setDb($db);
+                                        $answercommentauthor->find('id', $answercomment->user);
+                                        ?>
+
+                                        <tr class='answercommenttr'>
+                                            <td align='left' class='answercomment' colspan=2><?= $answercomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td class='answercomment' valign='top' align='right'><?= $answercomment->created ?> - <a><?= $answercommentauthor->username ?></a></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+
+                                <!-- ADD COMMENT COLLAPSE -->
                                 <?php
-                                $answercommentauthor = new User();
-                                $answercommentauthor->setDb($db);
-                                $answercommentauthor->find('id', $answercomment->user);
+                                if($session->has("user")) {
+                                    echo "<tr>
+                                        <td colspan=3><a class='commentcollapsepointer' data-toggle='collapse' data-target='#addanswercomment$answeruser->id'>+ Lägg till kommentar</a></td>
+                                    </tr>";
+                                } else {
+                                    echo "<tr>
+                                        <td colspan=3>$nousercommsg</td>
+                                    </tr>";
+                                }
                                 ?>
 
+
+
+                                <!-- ADD ANSWERCOMMENT -->
                                 <tr>
-                                    <td align='left' class='answercomment' colspan=2><?= $answercomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class='answercomment' valign='top' align='left'><?= $answercomment->created ?> - <a><?= $answercommentauthor->username ?></a></td>
+                                    <td colspan=3>
+                                        <div id="addanswercomment<?=$answeruser->id?>" class="collapse">
+                                            <form action='<?= $addanswercommenturl ?>' method="POST">
+                                                <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
+                                                <br />
+                                                <input type='hidden' name='user' value='<?= $userid ?>'>
+                                                <input type='hidden' name='commentto' value='<?= $answeruser->id ?>'>
+                                                <input type='hidden' name='articleid' value='<?= $article['article']->id ?>'>
+                                                <input class='btn btn-default' type='submit' name='addanswercommentbtn' value='Lägg till kommentar'>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
 
-                        <!-- ADD COMMENT COLLAPSE -->
-                        <?php
-                        if($session->has("user")) {
-                            echo "<tr>
-                                <td colspan=3><a class='commentcollapsepointer' data-toggle='collapse' data-target='#addanswercomment$answeruser->id'>+ Lägg till kommentar</a></td>
-                            </tr>";
-                        } else {
-                            echo "<tr>
-                                <td colspan=3>$nousercommsg</td>
-                            </tr>";
-                        }
-                        ?>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-
-
-                        <!-- ADD ANSWERCOMMENT -->
-                        <tr>
-                            <td colspan=3>
-                                <div id="addanswercomment<?=$answeruser->id?>" class="collapse">
-                                    <form action='<?= $addanswercommenturl ?>' method="POST">
-                                        <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
-                                        <br />
-                                        <input type='hidden' name='user' value='<?= $userid ?>'>
-                                        <input type='hidden' name='commentto' value='<?= $answeruser->id ?>'>
-                                        <input type='hidden' name='articleid' value='<?= $article['article']->id ?>'>
-                                        <input class='btn btn-default' type='submit' name='addanswercommentbtn' value='Lägg till kommentar'>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-
-        <?php endforeach; ?>
-        </tbody>
-    </table>
     <div class="row">
         <div class="col-md-8">
             <h4>Ditt svar</h4>

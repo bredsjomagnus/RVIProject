@@ -10,3 +10,6 @@ SELECT * FROM RVIXarticlecomment;
 SELECT * FROM RVIXanswercomment;
 
 SELECT * FROM RVIXaccount;
+
+SELECT * FROM RVIXtags;
+SELECT * FROM RVIXtags ORDER BY tagcount DESC, tag;

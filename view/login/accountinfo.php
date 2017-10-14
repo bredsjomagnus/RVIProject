@@ -6,6 +6,7 @@ $random = mt_rand(10000000, 99999999);
 $adminurl   = url("admin");
 $adminlink  = $isAdmin ? "| <a href='".url("admin")."'>Admin</a>" : "";
 $adminrow   = $isAdmin ? "<tr><td><b>Roll</b></td><td><a href='$adminurl'>Administratör</a></td></tr>": "";
+var_dump($_SESSION);
 ?>
 
 <div class="container">
