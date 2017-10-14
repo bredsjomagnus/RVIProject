@@ -7,11 +7,12 @@ use \Anax\User\User;
 $db                     = $this->di->get("db");
 $session                = $this->di->get("session");
 $userid                 = $session->get("userid");
-$addanswercommenturl = url('commentary/addarticlecommentprocess');
+$addarticlecommenturl = url('commentary/addarticlecommentprocess');
+$addanswercommenturl = url('commentary/addanswercommentprocess');
 // $addanswercomment = "<a id='addanswercomment' href='commentary/addanswercomment?userid=".$userid."&articleid=".$article['article']->id."'</a>+ lägg till kommentar</a>";
 $addanswercomment = "<a id='addanswercomment' href='#'</a>+ lägg till kommentar</a>";
 
-
+$nousercommsg = $session->has("user") ? "" : "<a class='commentcollapsepointer' href='".url('login')."'>+ Logga in för att kunna kommentera</a>";
 
 $author = new User();
 $author->setDb($db);
@@ -45,19 +46,19 @@ $author->find("id", $article['article']->user);
     </div>
     <br>
     <div class="row">
-        <?php if($hasAnswerComments) : ?>
-            <div class="col-md-8 answercommentdiv">
-                <table class='answercommenttable'>
-                <?php foreach($answercomments as $answercomment) : ?>
+        <?php if($hasArticleComments) : ?>
+            <div class="col-md-8 articlecommentdiv">
+                <table class='articlecommenttable'>
+                <?php foreach($articlecomments as $articlecomment) : ?>
                     <?php
-                    $answercommentauthor = new User();
-                    $answercommentauthor->setDb($db);
-                    $answercommentauthor->find('id', $answercomment->user);
+                    $articlecommentauthor = new User();
+                    $articlecommentauthor->setDb($db);
+                    $articlecommentauthor->find('id', $articlecomment->user);
                     ?>
 
                     <tr>
-                        <td class='answercomment'><?= $answercomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class='answercommentauthor' valign='top' align='right'><?= $answercomment->created ?> - <a><?= $answercommentauthor->username ?></a></td>
+                        <td class='articlecomment'><?= $articlecomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td class='articlecommentauthor' valign='top' align='right'><?= $articlecomment->created ?> - <a><?= $articlecommentauthor->username ?></a></td>
                     </tr>
                 <?php endforeach; ?>
                 </table>
@@ -68,10 +69,11 @@ $author->find("id", $article['article']->user);
     <!-- ARTIKELKOMMENTAR -->
     <div class="row">
         <div class="col-md-12">
+            <?php if($session->has("user")) : ?>
             <!-- ADD COMMENT COLLAPSE -->
             <a class='commentcollapsepointer' data-toggle="collapse" data-target="#addarticlecomment">+ Lägg till kommentar</a>
             <div id="addarticlecomment" class="collapse">
-                <form action='<?= $addanswercommenturl ?>' method="POST">
+                <form action='<?= $addarticlecommenturl ?>' method="POST">
                     <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
                     <br />
                     <input type='hidden' name='user' value='<?= $userid ?>'>
@@ -79,6 +81,8 @@ $author->find("id", $article['article']->user);
                     <input class='btn btn-default' type='submit' name='addarticlecommentbtn' value='Lägg till kommentar'>
                 </form>
             </div>
+            <?php endif; ?>
+            <?= $nousercommsg ?>
         </div>
     </div>
 
@@ -132,41 +136,64 @@ $author->find("id", $article['article']->user);
             ?>
             <tr>
                             <td valign=top><?=$gravatar->toHTML()?></td>
-                            <td><?=$filteredcomment?></td>
+                            <td colspan=2><?=$filteredcomment?></td>
                         </tr>
                         <tr class='commentarydottedunderline' >
                             <td></td>
-                            <td>
+                            <td colspan=2>
                                 <?=$numberlikes?>
-                            </div>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><?=$likeanswereditline?></td>
+                            <td colspan=2><?=$likeanswereditline?></td>
                         </tr>
                         <tr>
                             <td class='commentaryunderline'></td>
-                            <td class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$answeruser->username?>, <?= $answeruser->email ?></i></td>
+                            <td colspan=2 class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$answeruser->username?>, <?= $answeruser->email ?></i></td>
                         </tr>
                         <!-- SVARSKOMMENTARKOMMENTAR -->
 
+                        <?php foreach($answercomments as $answercomment) : ?>
+                            <?php if($answercomment->commentto == $answer->user) : ?>
+                                <?php
+                                $answercommentauthor = new User();
+                                $answercommentauthor->setDb($db);
+                                $answercommentauthor->find('id', $answercomment->user);
+                                ?>
+
+                                <tr>
+                                    <td align='left' class='answercomment' colspan=2><?= $answercomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class='answercomment' valign='top' align='left'><?= $answercomment->created ?> - <a><?= $answercommentauthor->username ?></a></td>
+                                </tr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
 
                         <!-- ADD COMMENT COLLAPSE -->
+                        <?php
+                        if($session->has("user")) {
+                            echo "<tr>
+                                <td colspan=3><a class='commentcollapsepointer' data-toggle='collapse' data-target='#addanswercomment$answeruser->id'>+ Lägg till kommentar</a></td>
+                            </tr>";
+                        } else {
+                            echo "<tr>
+                                <td colspan=3>$nousercommsg</td>
+                            </tr>";
+                        }
+                        ?>
+
+
+
+                        <!-- ADD ANSWERCOMMENT -->
                         <tr>
-                            <td colspan=2><a class='commentcollapsepointer' data-toggle="collapse" data-target="#addanswercomment<?=$answeruser->id?>">+ Lägg till kommentar</a></td>
-                        </tr>
-
-
-
-                        <tr>
-                            <td colspan=2>
+                            <td colspan=3>
                                 <div id="addanswercomment<?=$answeruser->id?>" class="collapse">
                                     <form action='<?= $addanswercommenturl ?>' method="POST">
                                         <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
                                         <br />
                                         <input type='hidden' name='user' value='<?= $userid ?>'>
                                         <input type='hidden' name='commentto' value='<?= $answeruser->id ?>'>
+                                        <input type='hidden' name='articleid' value='<?= $article['article']->id ?>'>
                                         <input class='btn btn-default' type='submit' name='addanswercommentbtn' value='Lägg till kommentar'>
                                     </form>
                                 </div>

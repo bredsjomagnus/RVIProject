@@ -54,6 +54,11 @@
   padding-bottom: 10px;
   padding-top: 10px;
 }
+.main-wrap .answertable .answercomment {
+  padding-bottom: 10px;
+  font-size: 11px;
+  color: #6e6e6e;
+}
 .main-wrap .answertable .avatarcolumn {
   width: 60px;
 }
@@ -109,19 +114,19 @@ textarea:focus {
   cursor: pointer;
   color: #a77777;
 }
-.answercommenttable {
+.articlecommenttable {
   margin-left: 20px;
   font-size: 11px;
   color: #6e6e6e;
 }
-.answercommenttable .answercomment {
+.articlecommenttable .articlecomment {
   width: 60%;
   padding-bottom: 10px;
 }
-.answercommenttable tr {
+.articlecommenttable tr {
   border-bottom: 1px solid lightgray;
 }
-.answercommentdiv {
+.articlecommentdiv {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 2px solid gray;

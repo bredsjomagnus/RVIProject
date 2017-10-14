@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
   
   CREATE TABLE IF NOT EXISTS RVIXanswercomment (
      id INT AUTO_INCREMENT NOT NULL,
+     articleid INT,
      commentto INT,
      user INT,
      `data` TEXT,
@@ -91,6 +92,7 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      deleted TIMESTAMP NULL,
      
      PRIMARY KEY  (id),
-     FOREIGN KEY (commentto) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (articleid) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (commentto) REFERENCES RVIXaccount (id),
      FOREIGN KEY (user) REFERENCES RVIXaccount (id)
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

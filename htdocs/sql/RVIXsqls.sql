@@ -7,4 +7,6 @@ SELECT * FROM RVIXanswer;
 
 SELECT * FROM RVIXarticlecomment;
 
+SELECT * FROM RVIXanswercomment;
+
 SELECT * FROM RVIXaccount;
