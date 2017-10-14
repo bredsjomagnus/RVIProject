@@ -12,4 +12,7 @@ SELECT * FROM RVIXanswercomment;
 SELECT * FROM RVIXaccount;
 
 SELECT * FROM RVIXtags;
-SELECT * FROM RVIXtags ORDER BY tagcount DESC, tag;
+SELECT * FROM RVIXtags ORDER BY tagcount DESC, tag LIMIT 5;
+
+SELECT * FROM RVIXarticleView;
+SELECT * FROM RVIXanswerSumView;

@@ -2,6 +2,7 @@
 namespace Anax\View;
 
 use \Anax\User\User;
+use \Maaa16\Commentary\AnswerSumView;
 
 $db         = $this->di->get("db");
 $session    = $this->di->get("session");
@@ -11,7 +12,8 @@ $session    = $this->di->get("session");
 
         <div class="col-md-12">
             <div class="btn-group" role="group" aria-label="...">
-                <a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla frågor</a>
+                <span class='small'>Se: </span><a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla</a> -
+                <span class='small'>Populära taggar: </span>
                 <?php foreach($populartags as $populartag) : ?>
                     <a class='tags' href='<?= url('commentary/articles/'.$populartag->tag) ?>'><?= $populartag->tag ?></a>
                 <?php endforeach; ?>
@@ -33,8 +35,8 @@ $session    = $this->di->get("session");
             <table class='table'>
                 <thead>
                     <tr>
-                        <th></th>
-                        <!-- <th></th> -->
+                        <th>Svar</th>
+                        <th>Fråga</th>
                     </tr>
                 </thead>
                 <?php foreach($articles as $article) : ?>
@@ -42,8 +44,13 @@ $session    = $this->di->get("session");
                     $user = new User();
                     $user->setDb($db);
                     $user->find("id", $article['user']);
+
+                    $answersumview = new AnswerSumView();
+                    $answersumview->setDb($db);
+                    $answers = ($answersumview->find("articleid", $article['id'])) ? $answersumview->numbanswers : '0';
                     ?>
                     <tr>
+                        <td><?= $answers ?></td>
                         <td>
                             <a href='<?= url('commentary/article/'.$article['id']) ?>'><?= $article['title'] ?></a>
                             <br />
@@ -51,7 +58,7 @@ $session    = $this->di->get("session");
                                 <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
                             <?php endforeach; ?>
                             <br />
-                            <span class='floatright author'>Ställd <?= substr($article['created'], 0, 16) ?> av <a href='#'><?= $user->username ?></a></span>
+                            <span class='floatright author'>Ställd <?= substr($article['created'], 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$user->id) ?>'><?= $user->username ?></a></span>
                         </td>
                         <!-- <td></td> -->
                     </tr>

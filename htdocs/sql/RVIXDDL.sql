@@ -2,10 +2,14 @@
 
 use RVIProject;
 
+DROP VIEW IF EXISTS RVIXarticleView;
+DROP VIEW IF EXISTS RVIXanswerSumView;
+
 -- DROP TABLE IF EXISTS RVIXanswer;
 -- DROP TABLE IF EXISTS RVIXarticlecomment;
-DROP TABLE IF EXISTS RVIXanswercomment;
+-- DROP TABLE IF EXISTS RVIXanswercomment;
 -- DROP TABLE IF EXISTS RVIXarticle;
+-- DROP TABLE IF EXISTS RVIXtags;
 
 -- DROP TABLE IF EXISTS RVIXaccount;
 
@@ -96,3 +100,43 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      FOREIGN KEY (commentto) REFERENCES RVIXaccount (id),
      FOREIGN KEY (user) REFERENCES RVIXaccount (id)
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  
+    CREATE TABLE IF NOT EXISTS RVIXtags (
+     id INT AUTO_INCREMENT NOT NULL,
+     tag VARCHAR(100),
+     tagcount INT,
+	 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated TIMESTAMP NULL,
+     deleted TIMESTAMP NULL,
+     
+     PRIMARY KEY  (id)
+  ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  
+  
+CREATE VIEW RVIXarticleView AS
+SELECT
+	U.id as userid,
+    U.username,
+	U.firstname,
+    U.surname,
+    A.id as articleid,
+    A.title,
+    A.tags,
+    A.created
+FROM RVIXarticle AS A
+	INNER JOIN RVIXaccount AS U
+		ON A.user = U.id;
+        
+CREATE VIEW RVIXanswerSumView AS
+SELECT
+	U.id as userid,
+	U.firstname,
+    U.surname,
+    A.id as articleid,
+    A.title,
+    COUNT(ANSW.id) as numbanswers
+FROM RVIXarticle AS A
+	INNER JOIN RVIXaccount AS U
+		ON A.user = U.id
+	INNER JOIN RVIXanswer AS ANSW
+        ON A.id = ANSW.answerto;

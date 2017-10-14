@@ -29,11 +29,17 @@ return [
             "callable" => ["commController", "addAnswerCommentProcess"]
         ],
         [
-            "info" => "Lägg till kommentar",
+            "info" => "Lägg till kommentar på ett svar",
             "requestMethod" => "get|post",
-            "path" => "createcomment",
-            "callable" => ["commController", "addComment"]
+            "path" => "userinfo/{id:digit}",
+            "callable" => ["commController", "userInfo"]
         ],
+        // [
+        //     "info" => "Lägg till kommentar",
+        //     "requestMethod" => "get|post",
+        //     "path" => "createcomment",
+        //     "callable" => ["commController", "addComment"]
+        // ],
         [
             "info" => "Redigera kommentar",
             "requestMethod" => "get",

@@ -25,7 +25,8 @@ $author->find("id", $article['article']->user);
 
         <div class="col-md-12">
             <div class="btn-group" role="group" aria-label="...">
-                <a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla frågor</a>
+                <span class='small'>Se: </span><a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla</a> -
+                <span class='small'>Populära taggar: </span>
                 <?php foreach($populartags as $populartag) : ?>
                     <a class='tags' href='<?= url('commentary/articles/'.$populartag->tag) ?>'><?= $populartag->tag ?></a>
                 <?php endforeach; ?>
@@ -57,7 +58,7 @@ $author->find("id", $article['article']->user);
             <?php endforeach; ?>
         </div>
         <div class="col-md-5">
-            <span class='author'>Ställd <?= substr($article['article']->created, 0, 16) ?> av <a href='#'><?= $author->username ?></a><?= $edit ?></span>
+            <span class='author'>Ställd <?= substr($article['article']->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$author->id) ?>'><?= $author->username ?></a><?= $edit ?></span>
         </div>
     </div>
     <br>
@@ -74,7 +75,7 @@ $author->find("id", $article['article']->user);
 
                     <tr>
                         <td class='articlecomment'><?= $articlecomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class='articlecommentauthor articlecomment' valign='top' align='right'><?= $articlecomment->created ?> - <a><?= $articlecommentauthor->username ?></a></td>
+                        <td class='articlecommentauthor articlecomment' valign='top' align='right'><?= $articlecomment->created ?> - <a href='<?= url('commentary/userinfo/'.$articlecommentauthor->id) ?>'><?= $articlecommentauthor->username ?></a></td>
                     </tr>
                 <?php endforeach; ?>
                 </table>
@@ -169,7 +170,7 @@ $author->find("id", $article['article']->user);
                                 </tr>
                                 <tr>
                                     <td class='commentaryunderline'></td>
-                                    <td colspan=2 class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<?=$answeruser->username?>, <?= $answeruser->email ?></i></td>
+                                    <td colspan=2 class='text-muted commentaryunderline'><i><?=$answer->created?>&nbsp&nbsp&nbsp<a href='<?= url('commentary/userinfo/'.$answeruser->id) ?>'><?=$answeruser->username?></a>, <?= $answeruser->email ?></i></td>
                                 </tr>
                                 <!-- SVARSKOMMENTARKOMMENTAR -->
 
@@ -183,7 +184,7 @@ $author->find("id", $article['article']->user);
 
                                         <tr class='answercommenttr'>
                                             <td align='left' class='answercomment' colspan=2><?= $answercomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td class='answercomment' valign='top' align='right'><?= $answercomment->created ?> - <a><?= $answercommentauthor->username ?></a></td>
+                                            <td class='answercomment' valign='top' align='right'><?= $answercomment->created ?> - <a href='<?= url('commentary/userinfo/'.$answercommentauthor->id) ?>'><?= $answercommentauthor->username ?></a></td>
                                         </tr>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
