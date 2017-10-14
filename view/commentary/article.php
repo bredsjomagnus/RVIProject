@@ -27,7 +27,7 @@ $author->find("id", $article['article']->user);
             <div class="btn-group" role="group" aria-label="...">
                 <span class='small'>Se: </span><a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla</a> -
                 <span class='small'>Populära taggar: </span>
-                <?php foreach($populartags as $populartag) : ?>
+                <?php foreach ($populartags as $populartag) : ?>
                     <a class='tags' href='<?= url('commentary/articles/'.$populartag->tag) ?>'><?= $populartag->tag ?></a>
                 <?php endforeach; ?>
             </div>
@@ -49,11 +49,11 @@ $author->find("id", $article['article']->user);
         <div class="col-md-6">
             <?php
             $edit = "";
-            if($article['article']->user == $session->get('userid')) {
+            if ($article['article']->user == $session->get('userid')) {
                 $edit = " - <a href='".url('commentary/updatearticle/'.$article['article']->id)."'>Ändra</a>";
             }
             ?>
-            <?php foreach(explode(", ", $article['article']->tags) as $tag) : ?>
+            <?php foreach (explode(", ", $article['article']->tags) as $tag) : ?>
                 <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
             <?php endforeach; ?>
         </div>
@@ -63,10 +63,10 @@ $author->find("id", $article['article']->user);
     </div>
     <br>
     <div class="row">
-        <?php if($hasArticleComments) : ?>
+        <?php if ($hasArticleComments) : ?>
             <div class="col-md-8 articlecommentdiv">
                 <table class='articlecommenttable'>
-                <?php foreach($articlecomments as $articlecomment) : ?>
+                <?php foreach ($articlecomments as $articlecomment) : ?>
                     <?php
                     $articlecommentauthor = new User();
                     $articlecommentauthor->setDb($db);
@@ -86,7 +86,7 @@ $author->find("id", $article['article']->user);
     <!-- ARTIKELKOMMENTAR -->
     <div class="row">
         <div class="col-md-12">
-            <?php if($session->has("user")) : ?>
+            <?php if ($session->has("user")) : ?>
             <!-- ADD COMMENT COLLAPSE -->
             <a class='commentcollapsepointer' data-toggle="collapse" data-target="#addarticlecomment">+ Lägg till kommentar</a>
             <div id="addarticlecomment" class="collapse">
@@ -174,8 +174,8 @@ $author->find("id", $article['article']->user);
                                 </tr>
                                 <!-- SVARSKOMMENTARKOMMENTAR -->
 
-                                <?php foreach($answercomments as $answercomment) : ?>
-                                    <?php if($answercomment->commentto == $answer->user) : ?>
+                                <?php foreach ($answercomments as $answercomment) : ?>
+                                    <?php if ($answercomment->commentto == $answer->user) : ?>
                                         <?php
                                         $answercommentauthor = new User();
                                         $answercommentauthor->setDb($db);
@@ -191,7 +191,7 @@ $author->find("id", $article['article']->user);
 
                                 <!-- ADD COMMENT COLLAPSE -->
                                 <?php
-                                if($session->has("user")) {
+                                if ($session->has("user")) {
                                     echo "<tr>
                                         <td colspan=3><a class='commentcollapsepointer' data-toggle='collapse' data-target='#addanswercomment$answeruser->id'>+ Lägg till kommentar</a></td>
                                     </tr>";

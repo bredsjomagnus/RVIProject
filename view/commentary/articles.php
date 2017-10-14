@@ -14,7 +14,7 @@ $session    = $this->di->get("session");
             <div class="btn-group" role="group" aria-label="...">
                 <span class='small'>Se: </span><a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla</a> -
                 <span class='small'>Populära taggar: </span>
-                <?php foreach($populartags as $populartag) : ?>
+                <?php foreach ($populartags as $populartag) : ?>
                     <a class='tags' href='<?= url('commentary/articles/'.$populartag->tag) ?>'><?= $populartag->tag ?></a>
                 <?php endforeach; ?>
             </div>
@@ -39,7 +39,7 @@ $session    = $this->di->get("session");
                         <th>Fråga</th>
                     </tr>
                 </thead>
-                <?php foreach($articles as $article) : ?>
+                <?php foreach ($articles as $article) : ?>
                     <?php
                     $user = new User();
                     $user->setDb($db);
@@ -54,7 +54,7 @@ $session    = $this->di->get("session");
                         <td>
                             <a href='<?= url('commentary/article/'.$article['id']) ?>'><?= $article['title'] ?></a>
                             <br />
-                            <?php foreach(explode(", ", $article['tags']) as $tag) : ?>
+                            <?php foreach (explode(", ", $article['tags']) as $tag) : ?>
                                 <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
                             <?php endforeach; ?>
                             <br />

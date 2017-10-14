@@ -6,6 +6,7 @@ use \Anax\Database\ActiveRecordModel;
 
 /**
  * A database driven model.
+ * @SuppressWarnings(PHPMD)
  */
 class User extends ActiveRecordModel
 {
@@ -16,29 +17,29 @@ class User extends ActiveRecordModel
     protected $tableName = "RVIXaccount";
 
     /**
-     * Columns in the table.
-     *
-     * @var integer $id primary key auto incremented.
-     */
-     public $id;
-     public $active;
-     public $role;
-     public $rank;
-     public $username;
-     public $pass;
-     public $firstname;
-     public $surname;
-     public $email;
-     public $notes;
-     public $created;
-     public $updated;
-     public $deleted;
-     public $address;
-     public $postnumber;
-     public $phone;
-     public $mobile;
-     public $inlogged;
-     public $city;
+    * Columns in the table.
+    *
+    * @var integer $id primary key auto incremented.
+    */
+    public $id;
+    public $active;
+    public $role;
+    public $rank;
+    public $username;
+    public $pass;
+    public $firstname;
+    public $surname;
+    public $email;
+    public $notes;
+    public $created;
+    public $updated;
+    public $deleted;
+    public $address;
+    public $postnumber;
+    public $phone;
+    public $mobile;
+    public $inlogged;
+    public $city;
 
     /**
      * Set the password.

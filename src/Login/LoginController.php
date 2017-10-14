@@ -8,7 +8,7 @@ use \Anax\DI\InjectionAwareTrait;
 /**
  * A controller for the Commentary.
  *
- * @SuppressWarnings(PHPMD.ExitExpression)
+ * @SuppressWarnings(PHPMD)
  */
 class LoginController implements InjectionAwareInterface
 {
@@ -131,7 +131,6 @@ class LoginController implements InjectionAwareInterface
         } else {
             $this->loginPage();
         }
-
     }
 
     /**
@@ -210,7 +209,7 @@ class LoginController implements InjectionAwareInterface
 
             //----------------------------------
 
-            if($userdata["firstname"] != null && $userdata["surname"] != null) {
+            if ($userdata["firstname"] != null && $userdata["surname"] != null) {
                 $admin->editAccount($id, $userdata);
                 $session->delete("usereditinfomsg");
             } else {
@@ -238,9 +237,9 @@ class LoginController implements InjectionAwareInterface
 
             //----------------------------------
 
-            if($userdata["oldpass"] != null && $userdata["newpassone"] != null && $userdata["newpasstwo"] != null) {
+            if ($userdata["oldpass"] != null && $userdata["newpassone"] != null && $userdata["newpasstwo"] != null) {
                 $isValid = $admin->validatePasswordEdit($id, $userdata);
-                if($isValid) {
+                if ($isValid) {
                     $admin->resetPassword($id, $userdata['newpassone']);
                     $session->delete('usereditpassmsg');
                 }
