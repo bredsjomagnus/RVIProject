@@ -117,7 +117,7 @@ class LoginController implements InjectionAwareInterface
 
             $userid     = $session->get("userid");
             $account    = $admin->getAccount($userid);
-            $isAdmin = ($session->get("role") == 'admin') ? true : false;
+            $isAdmin    = ($session->get("role") == 'admin') ? true : false;
 
             //----------------------------------
 

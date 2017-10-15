@@ -16,13 +16,7 @@ $userpage->find("id", $uid);
             <div class="row">
 
                 <div class="col-md-12">
-                    <div class="btn-group" role="group" aria-label="...">
-                        <span class='small'>Se: </span><a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla</a> -
-                        <span class='small'>Populära taggar: </span>
-                        <?php foreach ($populartags as $populartag) : ?>
-                            <a class='tags' href='<?= url('commentary/articles/'.$populartag->tag) ?>'><?= $populartag->tag ?></a>
-                        <?php endforeach; ?>
-                    </div>
+                    <?= $tagbar ?>
                     <br>
                     <br>
                     <a href='<?= url('commentary/articles/alla')?>'>Tillbaka</a>
@@ -54,9 +48,16 @@ $userpage->find("id", $uid);
                         <td>
                             <a href='<?= url('commentary/article/'.$article->articleid) ?>'><?= $article->title ?></a>
                             <br />
-                            <?php foreach (explode(", ", $article->tags) as $tag) : ?>
+                            <?php
+                            $tagpaths = explode(", ", $article->tagpaths);
+                            $tagnames = explode(", ", $article->tags);
+                            for($x = 0; $x < count($tagpaths); $x = $x +1){
+                                echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
+                            }
+                            ?>
+                            <!-- <?php foreach (explode(", ", $article->tags) as $tag) : ?>
                                 <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
-                            <?php endforeach; ?>
+                            <?php endforeach; ?> -->
                             <br />
                             <span class='floatright author'>Ställd <?= substr($article->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$article->userid) ?>'><?= $article->username ?></a></span>
                         </td>

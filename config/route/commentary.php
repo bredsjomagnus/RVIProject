@@ -64,6 +64,12 @@ return [
             "path" => "article/{id:digit}",
             "callable" => ["commController", "articlePage"]
         ],
+        [
+            "info" => "Gå till artikel",
+            "requestMethod" => null,
+            "path" => "tags",
+            "callable" => ["commController", "tagsPage"]
+        ],
 
         // Articles Routes
         // [

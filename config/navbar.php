@@ -31,6 +31,11 @@ return [
                 "route" => "commentary/articles/alla",
                 "class" => ""
             ],
+            "tags" => [
+                "text" => "Taggar",
+                "route" => "commentary/tags",
+                "class" => ""
+            ],
             // "books" => [
             //     "text" => "BÖCKER",
             //     "route" => "book",

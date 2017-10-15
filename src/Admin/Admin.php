@@ -72,8 +72,8 @@ class Admin implements InjectionAwareInterface
     public function editAccount($id, $userdata)
     {
         $this->di->get("db")->connect();
-        $sql = "UPDATE RVIXaccount SET role = ?, active = ?, firstname = ?, surname = ?, address = ?, postnumber = ?, city = ?, phone = ?, mobile = ?, notes = ? WHERE id = ?";
-        $params = [$userdata['role'], $userdata['active'], $userdata["firstname"], $userdata["surname"], $userdata["address"], $userdata["postnumber"], $userdata["city"], $userdata["phone"], $userdata["mobile"], $userdata["notes"], $id];
+        $sql = "UPDATE RVIXaccount SET role = ?, active = ?, firstname = ?, surname = ?, email = ?, address = ?, postnumber = ?, city = ?, phone = ?, mobile = ?, notes = ? WHERE id = ?";
+        $params = [$userdata['role'], $userdata['active'], $userdata["firstname"], $userdata["surname"], $userdata["email"], $userdata["address"], $userdata["postnumber"], $userdata["city"], $userdata["phone"], $userdata["mobile"], $userdata["notes"], $id];
         $this->di->get("db")->execute($sql, $params);
 
         $sql = "UPDATE RVIXaccount SET updated = CURRENT_TIMESTAMP WHERE id = ?";

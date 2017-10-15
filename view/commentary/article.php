@@ -20,17 +20,9 @@ $author->find("id", $article['article']->user);
 ?>
 
 <div class="container">
-
     <div class="row">
-
         <div class="col-md-12">
-            <div class="btn-group" role="group" aria-label="...">
-                <span class='small'>Se: </span><a class='tags' href='<?= url('commentary/articles/alla') ?>'>Alla</a> -
-                <span class='small'>Populära taggar: </span>
-                <?php foreach ($populartags as $populartag) : ?>
-                    <a class='tags' href='<?= url('commentary/articles/'.$populartag->tag) ?>'><?= $populartag->tag ?></a>
-                <?php endforeach; ?>
-            </div>
+            <?= $tagbar ?>
             <br>
             <br>
             <a href='<?= url('commentary/articles/alla')?>'>Tillbaka</a>
@@ -53,9 +45,16 @@ $author->find("id", $article['article']->user);
                 $edit = " - <a href='".url('commentary/updatearticle/'.$article['article']->id)."'>Ändra</a>";
             }
             ?>
-            <?php foreach (explode(", ", $article['article']->tags) as $tag) : ?>
+            <?php
+            $tagpaths = explode(", ", $article['article']->tagpaths);
+            $tagnames = explode(", ", $article['article']->tags);
+            for($x = 0; $x < count($tagpaths); $x = $x +1){
+                echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
+            }
+            ?>
+            <!-- <?php foreach (explode(", ", $article['article']->tags) as $tag) : ?>
                 <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
-            <?php endforeach; ?>
+            <?php endforeach; ?> -->
         </div>
         <div class="col-md-5">
             <span class='author'>Ställd <?= substr($article['article']->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$author->id) ?>'><?= $author->username ?></a><?= $edit ?></span>
@@ -91,7 +90,7 @@ $author->find("id", $article['article']->user);
             <a class='commentcollapsepointer' data-toggle="collapse" data-target="#addarticlecomment">+ Lägg till kommentar</a>
             <div id="addarticlecomment" class="collapse">
                 <form action='<?= $addarticlecommenturl ?>' method="POST">
-                    <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
+                    <textarea style='padding: 5px;' class='form-control' name='data' data-provide='markdown' value='' placeholder='Skriv kommentar här!'></textarea>
                     <br />
                     <input type='hidden' name='user' value='<?= $userid ?>'>
                     <input type='hidden' name='commentto' value='<?= $article['article']->id ?>'>
@@ -175,7 +174,7 @@ $author->find("id", $article['article']->user);
                                 <!-- SVARSKOMMENTARKOMMENTAR -->
 
                                 <?php foreach ($answercomments as $answercomment) : ?>
-                                    <?php if ($answercomment->commentto == $answer->user) : ?>
+                                    <?php if ($answercomment->commentto == $answer->id) : ?>
                                         <?php
                                         $answercommentauthor = new User();
                                         $answercommentauthor->setDb($db);
@@ -191,9 +190,11 @@ $author->find("id", $article['article']->user);
 
                                 <!-- ADD COMMENT COLLAPSE -->
                                 <?php
+                                $target = "#addanswercomment".$answeruser->id."-".$answer->id;
                                 if ($session->has("user")) {
+
                                     echo "<tr>
-                                        <td colspan=3><a class='commentcollapsepointer' data-toggle='collapse' data-target='#addanswercomment$answeruser->id'>+ Lägg till kommentar</a></td>
+                                        <td colspan=3><a class='commentcollapsepointer' data-toggle='collapse' data-target='$target'>+ Lägg till kommentar</a></td>
                                     </tr>";
                                 } else {
                                     echo "<tr>
@@ -207,12 +208,12 @@ $author->find("id", $article['article']->user);
                                 <!-- ADD ANSWERCOMMENT -->
                                 <tr>
                                     <td colspan=3>
-                                        <div id="addanswercomment<?=$answeruser->id?>" class="collapse">
+                                        <div id='<?="addanswercomment".$answeruser->id."-".$answer->id?>' class="collapse">
                                             <form action='<?= $addanswercommenturl ?>' method="POST">
-                                                <textarea class='form-control' name='data' value='' placeholder='Skriv kommentar här!'></textarea>
+                                                <textarea style='padding: 5px;' class='form-control' name='data' data-provide='markdown' value='' placeholder='Skriv kommentar här!'></textarea>
                                                 <br />
                                                 <input type='hidden' name='user' value='<?= $userid ?>'>
-                                                <input type='hidden' name='commentto' value='<?= $answeruser->id ?>'>
+                                                <input type='hidden' name='commentto' value='<?= $answer->id ?>'>
                                                 <input type='hidden' name='articleid' value='<?= $article['article']->id ?>'>
                                                 <input class='btn btn-default' type='submit' name='addanswercommentbtn' value='Lägg till kommentar'>
                                             </form>
@@ -225,7 +226,7 @@ $author->find("id", $article['article']->user);
             </table>
         </div>
     </div>
-
+    <hr>
     <div class="row">
         <div class="col-md-8">
             <h4>Ditt svar</h4>
