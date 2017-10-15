@@ -53,7 +53,7 @@ class LoginController implements InjectionAwareInterface
                 if ($res = $this->di->get("db")->executeFetchAll($sql)) {
                     $dbpass = $res[0]->pass;
                     $this->di->get("session")->set("loginmsg", "<span>kommer åt databasen vid inloggningsförsök</span>");
-                    $passwordverify = password_verify($loginpass, $dbpass);
+                    $passwordverify = /** @scrutinizer ignore-call */ password_verify($loginpass, $dbpass);
                     if ($res[0]->active != 'yes') {
                         $this->di->get("session")->set("loginmsg", "<span class='formerror'>&nbsp;&nbsp;&nbsp; Konto deaktiverat av administratör.</span>");
                     } else if ($passwordverify) {
@@ -64,7 +64,7 @@ class LoginController implements InjectionAwareInterface
                         $this->di->get("session")->set("role", $res[0]->role);
                         $this->di->get("session")->set("email", $res[0]->email);
                         $this->di->get("session")->set("userid", $res[0]->id);
-                        $this->di->get("session")->set("hash", password_hash($loginpass, PASSWORD_DEFAULT));
+                        $this->di->get("session")->set("hash", /** @scrutinizer ignore-call */ password_hash($loginpass, PASSWORD_DEFAULT));
                         // $app->session->set("firstname", $res[0]->firstname);
                         $this->di->get("cookie")->set("user", $loginuser);
                         $this->di->get("cookie")->set("firstname", $res[0]->firstname);
@@ -174,7 +174,7 @@ class LoginController implements InjectionAwareInterface
             $passone = (null != $this->di->get("request")->getPost("passone")) ? htmlentities($this->di->get("request")->getPost("passone")) : null;
             $passtwo = (null != $this->di->get("request")->getPost("passtwo")) ? htmlentities($this->di->get("request")->getPost("passtwo")) : null;
             $this->di->get("session")->delete('createusererrormsg');
-            if ($firstname == null || $surname == null || $username == null || $passone == null || $passtwo == null) {
+            if ($firstname === null || $surname === null || $username === null || $passone === null || $passtwo === null) {
                 $this->di->get("session")->set('createusererrormsg', "<br /><p class='formerror'>Nytt konto skapades inte.</p><p class='formerror'>Alla fält måste fyllas i när du skapar nytt konto.</p>");
                 $this->loginpage();
             } else {
@@ -193,7 +193,7 @@ class LoginController implements InjectionAwareInterface
             $admin          = $this->di->get("admin");
 
             //----------------------------------
-
+            $userdata = array();
             $userdata["role"]       = htmlentities($request->getPost("role"));
             $userdata["active"]     = htmlentities($request->getPost("active"));
             $userdata["notes"]      = htmlentities($request->getPost("notes"));
@@ -231,6 +231,7 @@ class LoginController implements InjectionAwareInterface
 
             //----------------------------------
 
+            $userdata = array();
             $userdata["oldpass"]    = ($request->getPost("oldpass") != null && $request->getPost("oldpass") != '') ? htmlentities($request->getPost("oldpass")) : null;
             $userdata["newpassone"] = ($request->getPost("newpassone") != null && $request->getPost("newpassone") != '') ? htmlentities($request->getPost("newpassone")) : null;
             $userdata["newpasstwo"] = ($request->getPost("newpasstwo") != null && $request->getPost("newpasstwo") != '') ? htmlentities($request->getPost("newpasstwo")) : null;
