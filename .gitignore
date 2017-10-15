@@ -3,3 +3,4 @@
 /vendor
 /config/database.php
 /config/anaxdatabase.php
+/htdocs/js/external
