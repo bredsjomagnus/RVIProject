@@ -51,13 +51,10 @@ $userpage->find("id", $uid);
                             <?php
                             $tagpaths = explode(", ", $article->tagpaths);
                             $tagnames = explode(", ", $article->tags);
-                            for($x = 0; $x < count($tagpaths); $x = $x +1){
+                            for ($x = 0; $x < count($tagpaths); $x = $x +1) {
                                 echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
                             }
                             ?>
-                            <!-- <?php foreach (explode(", ", $article->tags) as $tag) : ?>
-                                <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
-                            <?php endforeach; ?> -->
                             <br />
                             <span class='floatright author'>Ställd <?= substr($article->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$article->userid) ?>'><?= $article->username ?></a></span>
                         </td>

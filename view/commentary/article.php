@@ -48,13 +48,10 @@ $author->find("id", $article['article']->user);
             <?php
             $tagpaths = explode(", ", $article['article']->tagpaths);
             $tagnames = explode(", ", $article['article']->tags);
-            for($x = 0; $x < count($tagpaths); $x = $x +1){
+            for ($x = 0; $x < count($tagpaths); $x = $x +1) {
                 echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
             }
             ?>
-            <!-- <?php foreach (explode(", ", $article['article']->tags) as $tag) : ?>
-                <span><a class='tags' href='<?= url('commentary/articles/'.$tag) ?>'><?= $tag ?></a></span>
-            <?php endforeach; ?> -->
         </div>
         <div class="col-md-5">
             <span class='author'>Ställd <?= substr($article['article']->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$author->id) ?>'><?= $author->username ?></a><?= $edit ?></span>
@@ -192,7 +189,6 @@ $author->find("id", $article['article']->user);
                                 <?php
                                 $target = "#addanswercomment".$answeruser->id."-".$answer->id;
                                 if ($session->has("user")) {
-
                                     echo "<tr>
                                         <td colspan=3><a class='commentcollapsepointer' data-toggle='collapse' data-target='$target'>+ Lägg till kommentar</a></td>
                                     </tr>";

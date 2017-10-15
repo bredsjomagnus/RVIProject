@@ -51,7 +51,7 @@ $session    = $this->di->get("session");
                             <?php
                             $tagpaths = explode(", ", $article['tagpaths']);
                             $tagnames = explode(", ", $article['tags']);
-                            for($x = 0; $x < count($tagpaths); $x = $x +1){
+                            for ($x = 0; $x < count($tagpaths); $x = $x +1) {
                                 echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
                             }
                             ?>
