@@ -16,8 +16,6 @@ namespace Anax\View;
                     <?=  $tagcloud ?>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

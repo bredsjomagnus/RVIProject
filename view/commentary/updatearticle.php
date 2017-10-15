@@ -3,7 +3,7 @@ namespace Anax\View;
 
 ?>
 <div class="container">
-    <h3>SKAPA INNEHÅLL PÅ SIDAN</h3>
+    <h3>REDIGERA FRÅGA</h3>
     <div class="row">
         <div class="col-md-12">
             <a href=<?= url("commentary/article/".$id) ?>>Tillbaka</a>

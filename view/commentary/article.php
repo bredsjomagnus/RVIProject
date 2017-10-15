@@ -67,10 +67,11 @@ $author->find("id", $article['article']->user);
                     $articlecommentauthor = new User();
                     $articlecommentauthor->setDb($db);
                     $articlecommentauthor->find('id', $articlecomment->user);
+                    $filteredarticlecomment = $this->di->get("textfilter")->markdown($articlecomment->data);
                     ?>
 
                     <tr>
-                        <td class='articlecomment'><?= $articlecomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td class='articlecomment'><?= $filteredarticlecomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td class='articlecommentauthor articlecomment' valign='top' align='right'><?= $articlecomment->created ?> - <a href='<?= url('commentary/userinfo/'.$articlecommentauthor->id) ?>'><?= $articlecommentauthor->username ?></a></td>
                     </tr>
                 <?php endforeach; ?>
@@ -123,7 +124,7 @@ $author->find("id", $article['article']->user);
                     $gravatar->size = 50;
                     $gravatar->rating = "G";
                     $gravatar->border = "FF0000";
-                    $filteredcomment = $this->di->get("textfilter")->markdown($answer->data);
+                    $filteredanswer = $this->di->get("textfilter")->markdown($answer->data);
                     $answerlikes = explode(",", $answer->likes);
                     $likeanswereditline = "";
                     if ($this->di->get("session")->get('userid') == $answer->user) {
@@ -152,7 +153,7 @@ $author->find("id", $article['article']->user);
                     ?>
                     <tr>
                                     <td valign=top><?=$gravatar->toHTML()?></td>
-                                    <td colspan=2><?=$filteredcomment?></td>
+                                    <td colspan=2><?=$filteredanswer?></td>
                                 </tr>
                                 <tr class='commentarydottedunderline' >
                                     <td></td>
@@ -176,10 +177,12 @@ $author->find("id", $article['article']->user);
                                         $answercommentauthor = new User();
                                         $answercommentauthor->setDb($db);
                                         $answercommentauthor->find('id', $answercomment->user);
+
+                                        $filteredanswercomment = $this->di->get("textfilter")->markdown($answercomment->data);
                                         ?>
 
                                         <tr class='answercommenttr'>
-                                            <td align='left' class='answercomment' colspan=2><?= $answercomment->data ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td align='left' class='answercomment' colspan=2><?= $filteredanswercomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td class='answercomment' valign='top' align='right'><?= $answercomment->created ?> - <a href='<?= url('commentary/userinfo/'.$answercommentauthor->id) ?>'><?= $answercommentauthor->username ?></a></td>
                                         </tr>
                                     <?php endif; ?>
