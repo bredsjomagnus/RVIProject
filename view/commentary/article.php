@@ -67,28 +67,33 @@ $author->find("id", $article['article']->user);
     <!-- $articlevotes innehåller alla röster för denna artikel. -->
     <div class="row">
         <div class="col-md-3">
-            <!-- <a class='articlelikemarker' href="#"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
-            <a class='articlelikemarker' href="#"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a> -->
             <?php
-            $disabled   = $hasvotedonarticle ? "disabled" : "";
-            $canclevote = $hasvotedonarticle ? "&nbsp;&nbsp;&nbsp;<a class='canclearticlevote small' href='#'>Ta tillbaka röst</a>" : "";
+            // Man kan inte rösta om man redan röstat ELLER om man skrivit artikeln själv
+            $disabled   = ($hasvotedonarticle || $ownarticle) ? "disabled" : "";
+
+            // Man kan välja att ångra rösten om man redan röstat på artikeln.
+            $cancelvote = $hasvotedonarticle ? "&nbsp;&nbsp;&nbsp;<a class='cancelarticlevote small' href='".url('commentary/cancelarticlevote/'.$article['article']->id)."'> - Ångra röst</a>" : "" ;
+
+            // Är man själv ägare till artikeln kan man inte ångra någon röst. Annars blir det som $cancelvote ovan.
+            $cancelvote = $ownarticle ? "": $cancelvote;
+
             if ($articlevotesum == 0) {
                 $votes = '&plusmn; 0';
             } elseif ($articlevotesum > 0) {
                 $votes = '+ '.$articlevotesum;
-            } elseif ($articlevotesum < 0){
-                $votes = '&nbsp;&nbsp;'.$articlevotesum;
+            } elseif ($articlevotesum < 0) {
+                $votes = $articlevotesum;
             }
             ?>
-            <div class="btn-group">
-                <a class='btn articlelikemarker' href="#"> <?= $votes ?> </a>
-                <a class='btn btn-default articlelikemarker' href="<?= url('commentary/votearticleprocess/'.$article['article']->id.'?vote=up') ?>" <?= $disabled ?>>
+            <div class="btn-group votediv">
+                <a class='btn articlevotemarker articlevotesummarker' href="#"> <?= $votes ?> </a>
+                <a class='btn btn-default articlevotemarker' href="<?= url('commentary/votearticleprocess/'.$article['article']->id.'?vote=up') ?>" <?= $disabled ?>>
                     <span class="glyphicon glyphicon-menu-up" aria-hidden="true">
                 </a>
-                <a class='btn btn-default articlelikemarker' href="<?= url('commentary/votearticleprocess/'.$article['article']->id.'?vote=down') ?>" <?= $disabled ?>>
+                <a class='btn btn-default articlevotemarker' href="<?= url('commentary/votearticleprocess/'.$article['article']->id.'?vote=down') ?>" <?= $disabled ?>>
                     <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
                 </a>
-                <?= $canclevote ?>
+                <?= $cancelvote ?>
             </div>
         </div>
     </div>

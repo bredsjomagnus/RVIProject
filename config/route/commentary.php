@@ -42,12 +42,18 @@ return [
             "callable" => ["commController", "userInfo"]
         ],
 
-        // likeroutes
+        // vote routes
         [
-            "info" => "Lägg till kommentar på ett svar",
+            "info" => "Lägga röst på artikel process",
             "requestMethod" => "get|post",
             "path" => "votearticleprocess/{id:digit}",
             "callable" => ["commController", "voteArticleProcess"]
+        ],
+        [
+            "info" => "Ångra röst på artikel process",
+            "requestMethod" => "get|post",
+            "path" => "cancelarticlevote/{id:digit}",
+            "callable" => ["commController", "cancelArticleVoteProcess"]
         ],
 
 

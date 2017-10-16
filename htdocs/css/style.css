@@ -205,9 +205,21 @@ textarea:focus {
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-.articlelikemarker {
+.articlevotemarker {
   color: #842222;
   font-size: 0.8em;
+}
+.articlevotesummarker {
+  width: 50px;
+}
+.cancelarticlevote {
+  margin-top: 10px;
+  color: #a77777;
+}
+.votediv {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
 }
 /**
  * Bootstrap-Markdown.less
