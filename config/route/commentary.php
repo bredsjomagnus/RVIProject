@@ -5,6 +5,13 @@
 return [
     "routes" => [
         [
+            "info" => "Startsida eller sammanfattningssida med senaste frågorna, mest aktiva användarna mm.",
+            "requestMethod" => null,
+            "path" => "overview",
+            "callable" => ["commController", "overview"]
+        ],
+
+        [
             "info" => "Sidan med frågor/artiklar och möjlighet att skapa nya frågor/artiklar",
             "requestMethod" => null,
             "path" => "articles/{tag:alphanum}",
@@ -34,6 +41,18 @@ return [
             "path" => "userinfo/{id:digit}",
             "callable" => ["commController", "userInfo"]
         ],
+
+        // likeroutes
+        [
+            "info" => "Lägg till kommentar på ett svar",
+            "requestMethod" => "get|post",
+            "path" => "votearticleprocess/{id:digit}",
+            "callable" => ["commController", "voteArticleProcess"]
+        ],
+
+
+
+
         // [
         //     "info" => "Lägg till kommentar",
         //     "requestMethod" => "get|post",

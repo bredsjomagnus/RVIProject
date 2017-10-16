@@ -15,6 +15,16 @@ class LoginController implements InjectionAwareInterface
     use InjectionAwareTrait;
 
     /**
+    * Index redirect.
+    *
+    * @return void
+    */
+    public function getHome()
+    {
+        $this->di->get("response")->redirect("commentary/overview");
+    }
+
+    /**
     * Loginpage.
     *
     * @return void

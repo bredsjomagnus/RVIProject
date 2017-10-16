@@ -37,6 +37,8 @@ $author->find("id", $article['article']->user);
         </div>
     </div>
     <br>
+
+    <!-- row with tags and authorinfo -->
     <div class="row">
         <div class="col-md-6">
             <?php
@@ -57,7 +59,44 @@ $author->find("id", $article['article']->user);
             <span class='author'>Ställd <?= substr($article['article']->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$author->id) ?>'><?= $author->username ?></a><?= $edit ?></span>
         </div>
     </div>
+    <!-- /row with tags and authorinfo -->
+
     <br>
+
+    <!-- up- and downvotemarkers -->
+    <!-- $articlevotes innehåller alla röster för denna artikel. -->
+    <div class="row">
+        <div class="col-md-3">
+            <!-- <a class='articlelikemarker' href="#"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
+            <a class='articlelikemarker' href="#"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a> -->
+            <?php
+            $disabled   = $hasvotedonarticle ? "disabled" : "";
+            $canclevote = $hasvotedonarticle ? "&nbsp;&nbsp;&nbsp;<a class='canclearticlevote small' href='#'>Ta tillbaka röst</a>" : "";
+            if ($articlevotesum == 0) {
+                $votes = '&plusmn; 0';
+            } elseif ($articlevotesum > 0) {
+                $votes = '+ '.$articlevotesum;
+            } elseif ($articlevotesum < 0){
+                $votes = '&nbsp;&nbsp;'.$articlevotesum;
+            }
+            ?>
+            <div class="btn-group">
+                <a class='btn articlelikemarker' href="#"> <?= $votes ?> </a>
+                <a class='btn btn-default articlelikemarker' href="<?= url('commentary/votearticleprocess/'.$article['article']->id.'?vote=up') ?>" <?= $disabled ?>>
+                    <span class="glyphicon glyphicon-menu-up" aria-hidden="true">
+                </a>
+                <a class='btn btn-default articlelikemarker' href="<?= url('commentary/votearticleprocess/'.$article['article']->id.'?vote=down') ?>" <?= $disabled ?>>
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
+                </a>
+                <?= $canclevote ?>
+            </div>
+        </div>
+    </div>
+    <!-- /up- and downvotemarkers -->
+
+    <br>
+
+    <!-- ARITKELKOMMENTARER SOM ÄR INLAGDA -->
     <div class="row">
         <?php if ($hasArticleComments) : ?>
             <div class="col-md-8 articlecommentdiv">
@@ -80,7 +119,8 @@ $author->find("id", $article['article']->user);
         <?php endif; ?>
     </div>
     <br>
-    <!-- ARTIKELKOMMENTAR -->
+
+    <!-- ARTIKELKOMMENTAR 'LÄGG TILL LÄNK' -->
     <div class="row">
         <div class="col-md-12">
             <?php if ($session->has("user")) : ?>

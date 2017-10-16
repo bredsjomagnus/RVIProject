@@ -4,6 +4,7 @@ use RVIProject;
 
 DROP VIEW IF EXISTS RVIXarticleView;
 DROP VIEW IF EXISTS RVIXanswerSumView;
+DROP VIEW IF EXISTS RVIXanswerView;
 
 
 -- DROP TABLE IF EXISTS RVIXarticlecomment;
@@ -103,6 +104,23 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      FOREIGN KEY (user) REFERENCES RVIXaccount (id)
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
   
+  
+    CREATE TABLE IF NOT EXISTS RVIXarticlevotes (
+     id INT AUTO_INCREMENT NOT NULL,
+     articleid INT,
+     authorid INT,
+     voterid INT,
+	 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated TIMESTAMP NULL,
+     deleted TIMESTAMP NULL,
+     
+     PRIMARY KEY  (id),
+     FOREIGN KEY (articleid) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (authorid) REFERENCES RVIXaccount (id),
+     FOREIGN KEY (voterid) REFERENCES RVIXaccount (id)
+  ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  
+  
     CREATE TABLE IF NOT EXISTS RVIXtags (
      id INT AUTO_INCREMENT NOT NULL,
      tag VARCHAR(100),
@@ -145,3 +163,22 @@ FROM RVIXarticle AS A
 	INNER JOIN RVIXanswer AS ANSW
         ON A.id = ANSW.answerto
 GROUP BY A.title;
+
+CREATE VIEW RVIXanswerView AS
+SELECT
+	ANS.user AS userid,
+	U.id as articleuserid,
+    U.username,
+	U.firstname,
+    U.surname,
+    AR.id as articleid,
+    AR.title,
+	ANS.`data`,
+    AR.tags,
+    AR.tagpaths,
+    AR.created
+FROM RVIXanswer AS ANS
+	INNER JOIN RVIXarticle AS AR
+		ON ANS.answerto = AR.id
+	INNER JOIN RVIXaccount AS U
+        ON AR.user = U.id;

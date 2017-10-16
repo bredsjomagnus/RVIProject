@@ -7,6 +7,14 @@ return [
         [
             "info" => "Login sidan",
             "requestMethod" => null,
+            "path" => "",
+            "callable" => ["loginController", "getHome"]
+        ],
+
+
+        [
+            "info" => "Login sidan",
+            "requestMethod" => null,
             "path" => "login",
             "callable" => ["loginController", "loginpage"]
         ],

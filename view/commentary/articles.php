@@ -20,7 +20,14 @@ $session    = $this->di->get("session");
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href='<?= url('commentary/createarticle') ?>'> + Lägg till fråga</a>
+            <?php
+            if ($session->has("user")) {
+                $questionlink = "<a href='".url('commentary/createarticle')."'> + Lägg till fråga</a>";
+            } else {
+                $questionlink = "<a href='".url('login')."'> + Logga in för att ställa en fråga</a>";
+            }
+            ?>
+            <?= $questionlink ?>
         </div>
     </div>
     <!-- <?= var_dump($articles) ?> -->

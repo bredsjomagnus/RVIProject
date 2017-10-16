@@ -12,7 +12,7 @@ return [
         ],
         "items" => [
             "hem" => [
-                "text" => "HEM",
+                "text" => "Översikt",
                 "route" => "",
                 "class" => ""
             ],

@@ -205,6 +205,10 @@ textarea:focus {
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
+.articlelikemarker {
+  color: #842222;
+  font-size: 0.8em;
+}
 /**
  * Bootstrap-Markdown.less
  *
