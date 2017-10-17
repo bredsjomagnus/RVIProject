@@ -6,8 +6,9 @@ DROP VIEW IF EXISTS RVIXarticleView;
 DROP VIEW IF EXISTS RVIXanswerSumView;
 DROP VIEW IF EXISTS RVIXanswerView;
 
+DROP TABLE IF EXISTS RVIXarticlecommentvotes;
 -- DROP TABLE IF EXISTS RVIXarticlevotes;
-DROP TABLE IF EXISTS RVIXanswervotes;
+-- DROP TABLE IF EXISTS RVIXanswervotes;
 -- DROP TABLE IF EXISTS RVIXarticlecomment;
 -- DROP TABLE IF EXISTS RVIXanswercomment;
 -- DROP TABLE IF EXISTS RVIXanswer;
@@ -117,6 +118,24 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      
      PRIMARY KEY  (id),
      FOREIGN KEY (articleid) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (authorid) REFERENCES RVIXaccount (id),
+     FOREIGN KEY (voterid) REFERENCES RVIXaccount (id)
+  ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  
+	CREATE TABLE IF NOT EXISTS RVIXarticlecommentvotes (
+     id INT AUTO_INCREMENT NOT NULL,
+     articleid INT,
+     articlecommentid INT,
+     authorid INT,
+     voterid INT,
+     vote INT,
+	 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated TIMESTAMP NULL,
+     deleted TIMESTAMP NULL,
+     
+     PRIMARY KEY  (id),
+     FOREIGN KEY (articleid) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (articlecommentid) REFERENCES RVIXarticlecomment (id),
      FOREIGN KEY (authorid) REFERENCES RVIXaccount (id),
      FOREIGN KEY (voterid) REFERENCES RVIXaccount (id)
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

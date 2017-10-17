@@ -87,6 +87,8 @@ $author->find("id", $article['article']->user);
                 $votes = $articlevotesum;
             }
             ?>
+
+            <!-- VOTEBUTTONS FOR ARTICLE -->
             <div class="btn-group votediv">
                 <a class='btn articlevotemarker articlevotesummarker' href="#"> <?= $votes ?> </a>
                 <a class='btn btn-default articlevotemarker' href="<?= url('commentary/votearticleprocess/'.$article['article']->id.'?vote=up') ?>" <?= $disabledarticlevotebuttons ?>>
@@ -96,10 +98,10 @@ $author->find("id", $article['article']->user);
                     <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
                 </a>
             </div>
-
             <div class='numbvotediv'>
                 <span class='small'>Antal röster: <?= $totnumbofarticlevotes ?> st <?= $cancelvote ?></span>
             </div>
+            <!-- /VOTEBUTTONS FOR ARTICLE -->
 
         </div>
     </div>
@@ -114,15 +116,57 @@ $author->find("id", $article['article']->user);
                 <table class='articlecommenttable'>
                 <?php foreach ($articlecomments as $articlecomment) : ?>
                     <?php
+
+                    // ARTIKELKOMMENTARENS FÖRFATTARE
                     $articlecommentauthor = new User();
                     $articlecommentauthor->setDb($db);
                     $articlecommentauthor->find('id', $articlecomment->user);
+
+                    // ARTIKELKOMMENTAREN MARKDOWNFILTRERAD
                     $filteredarticlecomment = $this->di->get("textfilter")->markdown($articlecomment->data);
+
+                    $disabledarticlecommentvotebuttons = "";
+
+                    $articlecommentvotesum = $comm->getArticleCommentVoteSum($articlecomment->id);
+
+                    if ($articlecommentvotesum == 0) {
+                        $articlecommentvotesumhtml = '0';
+                    } else {
+                        $articlecommentvotesumhtml = $articlecommentvotesum;
+                    }
+
+                    $hasvotedonarticlecomment   = $comm->userHasVotedOnArticlecomment($articlecomment->id);
+                    $ownarticlecomment          = $comm->ownArticleComment($articlecomment->id);
+
+                    $disabledarticlecommentvotebuttons   = ($hasvotedonarticlecomment || $ownarticlecomment || !$session->has("user")) ? "disabledvotelink" : "";
+
+                    // Man kan välja att ångra rösten om man redan röstat på artikeln.
+                    $cancelarticlecommentvote = $hasvotedonarticlecomment ? "&nbsp;&nbsp;&nbsp;<a class='cancelarticlevote small' href='".url('commentary/cancelarticlecommentvote/'.$article['article']->id."?articlecommentid=".$articlecomment->id)."'>Ångra röst</a>" : "" ;
+
+                    // Är man själv ägare till artikeln kan man inte ångra någon röst. Annars blir det som $cancelvote ovan.
+                    $cancelarticlecommentvote = $ownarticlecomment ? "": $cancelarticlecommentvote;
                     ?>
 
-                    <tr>
+                    <tr class='articlecommentcontent'>
+                        <td valign='top' class='articlecommentvotesum'><?= $articlecommentvotesumhtml ?></td>
+                        <td valign='top' class='articlecommentvotecell'>
+
+                            <div class="btn-group votediv">
+                                <a class='articlevotemarker <?= $disabledarticlecommentvotebuttons ?>' href="<?= url('commentary/votearticlecommentprocess/'.$article['article']->id.'?articlecommentid='.$articlecomment->id.'&vote=up') ?>">
+                                    <span class="glyphicon glyphicon-menu-up" aria-hidden="true">
+                                </a>
+                                <br />
+                                <a class='articlevotemarker <?= $disabledarticlecommentvotebuttons ?>' href="<?= url('commentary/votearticlecommentprocess/'.$article['article']->id.'?articlecommentid='.$articlecomment->id.'&vote=down') ?>">
+                                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
+                                </a>
+                            </div>
+
+                        </td>
                         <td class='articlecomment'><?= $filteredarticlecomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class='articlecommentauthor articlecomment' valign='top' align='right'><?= $articlecomment->created ?> - <a href='<?= url('commentary/userinfo/'.$articlecommentauthor->id) ?>'><?= $articlecommentauthor->username ?></a></td>
+                        <td class='articlecommentauthor articlecomment' valign='top' align='right'>
+                            <?= $articlecomment->created ?> - <a href='<?= url('commentary/userinfo/'.$articlecommentauthor->id) ?>'><?= $articlecommentauthor->username ?></a>
+                            <br /><span class='small'><?= $cancelarticlecommentvote ?></span>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 </table>

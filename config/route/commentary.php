@@ -56,6 +56,20 @@ return [
             "callable" => ["commController", "cancelArticleVoteProcess"]
         ],
 
+        // vote routes for articlecomments
+        [
+            "info" => "Lägg till röst på ett svar - process",
+            "requestMethod" => "get|post",
+            "path" => "votearticlecommentprocess/{id:digit}",
+            "callable" => ["commController", "voteArticleCommentProcess"]
+        ],
+        [
+            "info" => "Lägg till röst på ett svar - process",
+            "requestMethod" => "get|post",
+            "path" => "cancelarticlecommentvote/{id:digit}",
+            "callable" => ["commController", "cancelArticleCommentVoteProcess"]
+        ],
+
         // vote routes for answers
         [
             "info" => "Lägg till röst på ett svar - process",
@@ -69,6 +83,8 @@ return [
             "path" => "cancelanswervote/{id:digit}",
             "callable" => ["commController", "cancelAnswerVoteProcess"]
         ],
+
+
 
 
 

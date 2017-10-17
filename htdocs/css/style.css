@@ -136,8 +136,21 @@ textarea:focus {
   padding-bottom: 10px;
   padding-top: 10px;
 }
-.articlecommenttable tr {
+.articlecommenttable .articlecommentcontent {
   border-bottom: 1px solid lightgray;
+  height: 62px;
+}
+.articlecommenttable .articlecommentcontent .articlecommentvotecell {
+  width: 5%;
+  text-align: center;
+}
+.articlecommenttable .articlecommentcontent .articlecommentvotesum {
+  padding-top: 23px;
+  width: 2%;
+}
+.articlecommenttable .articlecommentcontent .disabledvotelink {
+  pointer-events: none;
+  cursor: default;
 }
 .articlecommentdiv {
   margin-top: 10px;
