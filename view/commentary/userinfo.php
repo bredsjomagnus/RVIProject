@@ -3,8 +3,11 @@ namespace Anax\View;
 
 use \Anax\User\User;
 use \Maaa16\Commentary\AnswerSumView;
+use \Maaa16\Commentary\ArticleVotes;
 
-$db = $this->di->get("db");
+$comm   = $this->di->get("comm");
+$db     = $this->di->get("db");
+
 $userpage = new User();
 $userpage->setDb($db);
 $userpage->find("id", $uid);
@@ -31,6 +34,8 @@ $userpage->find("id", $uid);
                         <thead>
                             <tr>
                                 <th>Svar</th>
+                                <th>Rang</th>
+                                <th>Röster</th>
                                 <th>Ställt frågor</th>
                             </tr>
                         </thead>
@@ -43,9 +48,16 @@ $userpage->find("id", $uid);
                             $answersumview = new AnswerSumView();
                             $answersumview->setDb($db);
                             $answers = ($answersumview->find("articleid", $article->articleid)) ? $answersumview->numbanswers : '0';
+
+                            $articlevotesum             = $comm->getArticleVoteSum($article->articleid);
+                            $totnumbofarticlevotes      = $comm->getTotNumbOfAricleVotes($article->articleid);
+
+                            $articlevotesum = ($articlevotesum == 0) ? 0 : $articlevotesum;
                             ?>
                             <tr>
                                 <td><?= $answers ?></td>
+                                <td><?= $articlevotesum ?></td>
+                                <td><?= $totnumbofarticlevotes ?></td>
                                 <td>
                                     <a href='<?= url('commentary/article/'.$article->articleid) ?>'><?= $article->title ?></a>
                                     <br />
