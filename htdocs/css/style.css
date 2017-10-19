@@ -64,14 +64,21 @@
   font-size: 11px;
   color: #6e6e6e;
 }
+.main-wrap .answertable .answerfirstcolumn {
+  width: 3%;
+}
 .main-wrap .answertable .answersecondcolumn {
-  width: 60%;
+  width: 7%;
+}
+.main-wrap .answertable .answerthirdcolumn {
+  width: 70%;
+}
+.main-wrap .answertable .answerfourthcolumn {
+  width: 20%;
 }
 .main-wrap .answertable .answercommenttr {
   border-bottom: 1px solid lightgray;
-}
-.main-wrap .answertable .avatarcolumn {
-  width: 60px;
+  height: 80px;
 }
 .main-wrap .answertable .commentaryunderline {
   border-bottom: 1px solid #b5b6c0;
@@ -87,6 +94,19 @@
   color: black;
   padding-top: 6px;
   padding-left: 6px;
+}
+.main-wrap .answertable .answercommentvotecell {
+  text-align: center;
+  font-size: 0.8em;
+  margin-bottom: 10px;
+}
+.main-wrap .answertable .answercommentvotesum {
+  padding-top: 33px;
+  font-size: 0.8em;
+}
+.main-wrap .answertable .disabledvotelink {
+  pointer-events: none;
+  cursor: default;
 }
 .footer-wrap .footer {
   height: 200px;
@@ -243,6 +263,15 @@ textarea:focus {
 }
 .answeruserinfo {
   font-size: 0.8em;
+}
+#form-element-data.createtextarea.md-input {
+  padding: 5px;
+}
+.userinfotableheader {
+  font-size: 0.9em;
+}
+.userinfotable {
+  text-align: center;
 }
 /**
  * Bootstrap-Markdown.less

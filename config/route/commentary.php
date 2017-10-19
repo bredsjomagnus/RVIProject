@@ -84,6 +84,28 @@ return [
             "callable" => ["commController", "cancelAnswerVoteProcess"]
         ],
 
+        // vote routes for answercomments
+        [
+            "info" => "Lägg till röst på ett svar - process",
+            "requestMethod" => "get|post",
+            "path" => "voteanswercommentprocess/{id:digit}",
+            "callable" => ["commController", "voteAnswerCommentProcess"]
+        ],
+        [
+            "info" => "Ångra röst på svar - process",
+            "requestMethod" => "get|post",
+            "path" => "cancelanswercommentvote/{id:digit}",
+            "callable" => ["commController", "cancelAnswerCommentVoteProcess"]
+        ],
+
+        // Update answer
+        [
+            "info" => "Ångra röst på svar - process",
+            "requestMethod" => "get|post",
+            "path" => "updateanswer/{id:digit}",
+            "callable" => ["commController", "updateAnswer"]
+        ],
+
 
 
 

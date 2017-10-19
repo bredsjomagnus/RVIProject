@@ -30,12 +30,13 @@ $userpage->find("id", $uid);
             <!-- <?= var_dump($articleview) ?> -->
             <div class="row">
                 <div class="col-md-6">
-                    <table class='table'>
+                    <table class='table userinfotable'>
                         <thead>
-                            <tr>
+                            <tr class='userinfotableheader'>
                                 <th>Svar</th>
                                 <th>Rang</th>
                                 <th>Röster</th>
+                                <th>Kommentarer</th>
                                 <th>Ställt frågor</th>
                             </tr>
                         </thead>
@@ -51,6 +52,7 @@ $userpage->find("id", $uid);
 
                             $articlevotesum             = $comm->getArticleVoteSum($article->articleid);
                             $totnumbofarticlevotes      = $comm->getTotNumbOfAricleVotes($article->articleid);
+                            $totnumbofarticlecomments   = $comm->getTotNumbOfArticleComments($article->articleid);
 
                             $articlevotesum = ($articlevotesum == 0) ? 0 : $articlevotesum;
                             ?>
@@ -58,6 +60,7 @@ $userpage->find("id", $uid);
                                 <td><?= $answers ?></td>
                                 <td><?= $articlevotesum ?></td>
                                 <td><?= $totnumbofarticlevotes ?></td>
+                                <td><?= $totnumbofarticlecomments ?></td>
                                 <td>
                                     <a href='<?= url('commentary/article/'.$article->articleid) ?>'><?= $article->title ?></a>
                                     <br />
@@ -80,11 +83,14 @@ $userpage->find("id", $uid);
 
 
                 <div class="col-md-6">
-                    <table class='table'>
+                    <table class='table userinfotable'>
                         <thead>
-                            <tr>
+                            <tr class='userinfotableheader'>
+                                <th>Rang</th>
+                                <th>Röster</th>
+                                <th>Kommentarer</th>
                                 <th>Svarat på frågor</th>
-                                <th></th>
+
                             </tr>
                         </thead>
                         <?php foreach ($answerview as $answer) : ?>
@@ -93,12 +99,16 @@ $userpage->find("id", $uid);
                             $user->setDb($db);
                             $user->find("id", $answer->userid);
 
-                            // $answersumview = new AnswerSumView();
-                            // $answersumview->setDb($db);
-                            // $answers = ($answersumview->find("articleid", $article->articleid)) ? $answersumview->numbanswers : '0';
+                            $answervotesum              = $comm->getAnswerVoteSum($answer->answerid);
+                            $totnumbofanswervotes       = $comm->getTotNumbOfAnswerVotes($answer->answerid);
+                            $totnumbofanswercomments    = $comm->getTotNumbOfAnswerComments($answer->answerid);
+
+                            $answervotesum = ($answervotesum == 0) ? 0 : $answervotesum;
                             ?>
                             <tr>
-                                <!-- <td><?= $answers ?></td> -->
+                                <td><?= $answervotesum ?></td>
+                                <td><?= $totnumbofanswervotes ?></td>
+                                <td><?= $totnumbofanswercomments ?></td>
                                 <td>
                                     <a href='<?= url('commentary/article/'.$answer->articleid) ?>'><?= $answer->title ?></a>
                                     <br />

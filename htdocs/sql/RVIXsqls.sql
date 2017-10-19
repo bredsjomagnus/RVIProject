@@ -25,3 +25,11 @@ SELECT * FROM RVIXanswerSumView;
 SELECT * FROM RVIXanswerView;
 
 SELECT * FROM RVIXarticlevotes;
+
+SELECT * FROM RVIXarticlecommentvotes;
+
+SELECT * FROM RVIXarticlecomment WHERE id = 3;
+
+SELECT * FROM RVIXanswervotes;
+
+SELECT * FROM RVIXanswercommentvotes;

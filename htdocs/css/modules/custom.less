@@ -62,17 +62,34 @@
             font-size: 11px;
             color: #6e6e6e;
         }
+
+        .answerfirstcolumn {
+            width: 3%;
+            // padding-bottom: 10px;
+            // padding-top: 10px;
+            // padding-left: 20px;
+            // font-size: 11px;
+            // color: #6e6e6e;
+        }
         .answersecondcolumn {
-            width: 60%;
+            width: 7%;
+        }
+        .answerthirdcolumn {
+            width: 70%;
+        }
+        .answerfourthcolumn {
+            width: 20%;
         }
         .answercommenttr{
             border-bottom: 1px solid lightgray;
+            height: 80px;
         }
         .avatarcolumn {
-            width: 60px;
+            // width: 60px;
         }
         .commentaryunderline {
             border-bottom: 1px solid #b5b6c0;
+
         }
         .commentarydottedunderline {
             border-bottom: 1px dotted lightgray;
@@ -89,6 +106,21 @@
             color: black;
             padding-top: 6px;
             padding-left: 6px;
+        }
+        .answercommentvotecell {
+            // width: 1%;
+            text-align: center;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        .answercommentvotesum {
+            padding-top: 33px;
+            font-size: 0.8em;
+            // width: 20px;
+        }
+        .disabledvotelink {
+            pointer-events: none;
+            cursor: default;
         }
     }
 
@@ -276,4 +308,16 @@ textarea:focus {
 }
 .answeruserinfo{
     font-size: 0.8em;
+}
+
+// för padding i textarea
+#form-element-data.createtextarea.md-input {
+    padding: 5px;
+}
+
+.userinfotableheader {
+    font-size: 0.9em;
+}
+.userinfotable {
+    text-align: center;
 }

@@ -2,20 +2,23 @@
 
 use RVIProject;
 
+SET NAMES utf8mb4;
+
 DROP VIEW IF EXISTS RVIXarticleView;
 DROP VIEW IF EXISTS RVIXanswerSumView;
 DROP VIEW IF EXISTS RVIXanswerView;
 
 DROP TABLE IF EXISTS RVIXarticlecommentvotes;
--- DROP TABLE IF EXISTS RVIXarticlevotes;
--- DROP TABLE IF EXISTS RVIXanswervotes;
--- DROP TABLE IF EXISTS RVIXarticlecomment;
--- DROP TABLE IF EXISTS RVIXanswercomment;
--- DROP TABLE IF EXISTS RVIXanswer;
--- DROP TABLE IF EXISTS RVIXarticle;
--- DROP TABLE IF EXISTS RVIXtags;
+DROP TABLE IF EXISTS RVIXarticlevotes;
+DROP TABLE IF EXISTS RVIXanswercommentvotes;
+DROP TABLE IF EXISTS RVIXanswervotes;
+DROP TABLE IF EXISTS RVIXarticlecomment;
+DROP TABLE IF EXISTS RVIXanswercomment;
+DROP TABLE IF EXISTS RVIXanswer;
+DROP TABLE IF EXISTS RVIXarticle;
+DROP TABLE IF EXISTS RVIXtags;
 
--- DROP TABLE IF EXISTS RVIXaccount;
+DROP TABLE IF EXISTS RVIXaccount;
 
 CREATE TABLE IF NOT EXISTS RVIXaccount 
 (
@@ -73,7 +76,7 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      PRIMARY KEY  (id),
      FOREIGN KEY (answerto) REFERENCES RVIXarticle (id),
      FOREIGN KEY (user) REFERENCES RVIXaccount (id)
-  ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
   
   CREATE TABLE IF NOT EXISTS RVIXarticlecomment (
      id INT AUTO_INCREMENT NOT NULL,
@@ -140,7 +143,7 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      FOREIGN KEY (voterid) REFERENCES RVIXaccount (id)
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
   
-      CREATE TABLE IF NOT EXISTS RVIXanswervotes (
+	CREATE TABLE IF NOT EXISTS RVIXanswervotes (
      id INT AUTO_INCREMENT NOT NULL,
      articleid INT,
      answerid INT,
@@ -158,6 +161,25 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      FOREIGN KEY (voterid) REFERENCES RVIXaccount (id)
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
   
+  
+	CREATE TABLE IF NOT EXISTS RVIXanswercommentvotes (
+     id INT AUTO_INCREMENT NOT NULL,
+     articleid INT,
+     answerid INT,
+     answercommentid INT,
+     authorid INT,
+     voterid INT,
+     vote INT,
+	 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated TIMESTAMP NULL,
+     deleted TIMESTAMP NULL,
+     
+     PRIMARY KEY  (id),
+     FOREIGN KEY (articleid) REFERENCES RVIXarticle (id),
+     FOREIGN KEY (answerid) REFERENCES RVIXanswer (id),
+     FOREIGN KEY (authorid) REFERENCES RVIXaccount (id),
+     FOREIGN KEY (voterid) REFERENCES RVIXaccount (id)
+  ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
   
     CREATE TABLE IF NOT EXISTS RVIXtags (
      id INT AUTO_INCREMENT NOT NULL,
@@ -204,6 +226,7 @@ GROUP BY A.title;
 
 CREATE VIEW RVIXanswerView AS
 SELECT
+	ANS.id AS answerid,
 	ANS.user AS userid,
 	U.id as articleuserid,
     U.username,
@@ -220,3 +243,18 @@ FROM RVIXanswer AS ANS
 		ON ANS.answerto = AR.id
 	INNER JOIN RVIXaccount AS U
         ON AR.user = U.id;
+        
+-- CREATE VIEW RVIXanswercommentSumView AS
+-- SELECT
+-- 	U.id as userid,
+-- 	U.firstname,
+--     U.surname,
+--     A.id as articleid,
+--     A.title,
+--     COUNT(ANSW.id) as numbanswers
+-- FROM RVIXanswer AS A
+-- 	INNER JOIN RVIXaccount AS U
+-- 		ON A.user = U.id
+-- 	INNER JOIN RVIXanswercomment AS ANSW
+--         ON A.id = ANSW.answerto
+-- GROUP BY A.title;

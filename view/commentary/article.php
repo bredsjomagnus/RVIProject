@@ -18,7 +18,7 @@ $author = new User();
 $author->setDb($db);
 $author->find("id", $article['article']->user);
 
-
+$editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['article']->updated : "";
 ?>
 
 <div class="container">
@@ -28,14 +28,14 @@ $author->find("id", $article['article']->user);
             <br>
             <br>
             <a href='<?= url('commentary/articles/alla')?>'>Tillbaka</a>
-            <!-- <h4>Frågor - <?= $tag ?></h4> -->
-
         </div>
     </div>
     <div class="row">
         <div class="col-md-9">
             <h2><?= $article['article']->title ?></h2>
             <?= $article['articledata']->text ?>
+            <br>
+            <span class='small text-muted'><?= $editarticle ?></span>
         </div>
     </div>
     <br>
@@ -125,8 +125,6 @@ $author->find("id", $article['article']->user);
                     // ARTIKELKOMMENTAREN MARKDOWNFILTRERAD
                     $filteredarticlecomment = $this->di->get("textfilter")->markdown($articlecomment->data);
 
-                    $disabledarticlecommentvotebuttons = "";
-
                     $articlecommentvotesum = $comm->getArticleCommentVoteSum($articlecomment->id);
 
                     if ($articlecommentvotesum == 0) {
@@ -164,7 +162,7 @@ $author->find("id", $article['article']->user);
                         </td>
                         <td class='articlecomment'><?= $filteredarticlecomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td class='articlecommentauthor articlecomment' valign='top' align='right'>
-                            <?= $articlecomment->created ?> - <a href='<?= url('commentary/userinfo/'.$articlecommentauthor->id) ?>'><?= $articlecommentauthor->username ?></a>
+                            <?= $articlecomment->created ?><br /><a href='<?= url('commentary/userinfo/'.$articlecommentauthor->id) ?>'><?= $articlecommentauthor->username ?></a>
                             <br /><span class='small'><?= $cancelarticlecommentvote ?></span>
                         </td>
                     </tr>
@@ -202,9 +200,10 @@ $author->find("id", $article['article']->user);
             <table class='answertable'>
                 <thead>
                     <tr>
-                        <th class='avatarcolumn'></th>
+                        <th class='avatarfirstcolumn'></th>
                         <th class='answersecondcolumn'></th>
                         <th class='answerthirdcolumn'></th>
+                        <th class='answerfourthcolumn'></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -253,6 +252,11 @@ $author->find("id", $article['article']->user);
 
                     //-------------------------- /HANTERING AV RÖSTVARIABLER ---------------------------------
 
+                    $editanswer = "";
+                    if ($answer->user == $session->get('userid')) {
+                        $editanswer = "<a href='".url('commentary/updateanswer/'.$article['article']->id."?answerid=".$answer->id)."'>Ändra</a>";
+                    }
+
                     $answeruser = new User();
                     $answeruser->setDb($db);
                     $answeruser->find("id", $answer->user);
@@ -266,26 +270,34 @@ $author->find("id", $article['article']->user);
                     // Markdownfiltrerat svar
                     $filteredanswer = $this->di->get("textfilter")->markdown($answer->data);
 
+                    $editedanswer = ($answer->updated != null) ? "Redigerad ". $answer->updated : "";
 
                     ?>
 
                     <!-- AVATAR AND MESSAGE -->
                     <tr>
-                        <td valign=top align='center'>
-
+                        <td valign=top align='center' colspan=2>
                             <?=$gravatar->toHTML()?>
                             <br />
                             <span class='answeruserinfo'>
                                 <a href='<?= url('commentary/userinfo/'.$answeruser->id) ?>'><?=$answeruser->username?></a>
                                 <br />
                                 <?= substr($answer->created, 0, 10) ?>
+                                <br>
+                                <span><?= $editanswer ?></span>
                             </span>
                         </td>
-                        <td colspan=2><?=$filteredanswer?></td>
+                        <td colspan=2>
+                            <div data-provide="markdown-editable" data-savable='true'>
+                                <?=$filteredanswer?>
+                            </div>
+                            <br />
+                            <span class='small text-muted'><?= $editedanswer ?></span>
+                        </td>
                     </tr>
                     <tr class='commentarydottedunderline' >
                         <td></td>
-                        <td colspan=2>
+                        <td colspan=3>
 
                         </td>
                     </tr>
@@ -293,7 +305,7 @@ $author->find("id", $article['article']->user);
 
                     <!-- ANSWER VOTES BUTTONS-->
                     <tr>
-                        <td colspan=2>
+                        <td colspan=3>
                             <div class="btn-group votediv">
                                 <a class='btn articlevotemarker articlevotesummarker' href="#"> <?= $sumanswervotes ?> </a>
                                 <a class='btn btn-default articlevotemarker' href="<?= url('commentary/voteanswerprocess/'.$article['article']->id.'?vote=up&answerid='.$answer->id.'&authorid='.$answer->user) ?>" <?= $disabledanswervotebuttons ?>>
@@ -316,7 +328,7 @@ $author->find("id", $article['article']->user);
 
                     <tr>
                         <td class='commentaryunderline'></td>
-                        <td colspan=2 class='text-muted commentaryunderline'></td>
+                        <td colspan=3 class='text-muted commentaryunderline'></td>
                     </tr>
 
 
@@ -329,11 +341,51 @@ $author->find("id", $article['article']->user);
                             $answercommentauthor->find('id', $answercomment->user);
 
                             $filteredanswercomment = $this->di->get("textfilter")->markdown($answercomment->data);
+
+
+                            $hasvotedonanswercomment   = $comm->userHasVotedOnAnswerComment($answercomment->id);
+                            $ownanswercomment          = $comm->ownAnswerComment($answercomment->id);
+
+                            $answercommentvotesum      = $comm->getAnswerCommentVoteSum($answercomment->id);
+                            if ($answercommentvotesum == 0) {
+                                $answercommentvotesumhtml = '0';
+                            } else {
+                                $answercommentvotesumhtml = $answercommentvotesum;
+                            }
+
+                            // Kan användaren rösta på svaret?
+                            $disabledanswercommentvotebuttons = ($hasvotedonanswercomment || $ownanswercomment || !$session->has("user")) ? "disabledvotelink" : "";
+
+                            // Man kan välja att ångra rösten om man redan röstat på artikeln.
+                            $cancelanswercommentvote   = $hasvotedonanswercomment ? "&nbsp;&nbsp;&nbsp;<a class='cancelarticlevote small' href='".url('commentary/cancelanswercommentvote/'.$article['article']->id."?answercommentid=".$answercomment->id)."'>Ångra röst</a>" : "" ;
+
+                            // Är man själv ägare till artikeln kan man inte ångra någon röst. Annars blir det som $cancelvote ovan.
+                            $cancelanswercommentvote   = $ownanswercomment ? "": $cancelanswercommentvote;
+
+                            // $totnumbanswercommentvotes = $comm->getTotNumbOfAnswerCommentVotes($answercomment->id);
                             ?>
 
                             <tr class='answercommenttr'>
-                                <td align='left' class='answercomment' colspan=2><?= $filteredanswercomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td class='answercomment' valign='top' align='right'><?= $answercomment->created ?> - <a href='<?= url('commentary/userinfo/'.$answercommentauthor->id) ?>'><?= $answercommentauthor->username ?></a></td>
+
+                                <td valign='top' align='right' class='answercommentvotesum'><?= $answercommentvotesumhtml ?></td>
+                                <td valign='top' class='answercommentvotecell'>
+                                    <div class="btn-group votediv">
+                                        <a class='articlevotemarker <?= $disabledanswercommentvotebuttons ?>' href="<?= url('commentary/voteanswercommentprocess/'.$article['article']->id.'?answercommentid='.$answercomment->id.'&vote=up&answerid='.$answer->id) ?>">
+                                            <span class="glyphicon glyphicon-menu-up" aria-hidden="true">
+                                        </a>
+                                        <br />
+                                        <a class='articlevotemarker <?= $disabledanswercommentvotebuttons ?>' href="<?= url('commentary/voteanswercommentprocess/'.$article['article']->id.'?answercommentid='.$answercomment->id.'&vote=down&answerid='.$answer->id) ?>">
+                                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
+                                        </a>
+                                    </div>
+                                </td>
+                                <td align='left' class='answercomment'><?= $filteredanswercomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td class='answercomment' valign='top' align='right'><?= $answercomment->created ?>
+                                    <br />
+                                    <a href='<?= url('commentary/userinfo/'.$answercommentauthor->id) ?>'><?= $answercommentauthor->username ?></a>
+                                    <br />
+                                    <span class='small'><?= $cancelanswercommentvote ?></span>
+                                </td>
                             </tr>
                         <?php endif; ?>
                     <?php endforeach; ?>
