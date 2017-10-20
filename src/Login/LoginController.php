@@ -96,7 +96,7 @@ class LoginController implements InjectionAwareInterface
                         $params = [$loginuser];
                         $this->di->get("db")->execute($sql, $params);
 
-                        $this->di->get("response")->redirect("accountinfo");
+                        $this->di->get("response")->redirect("commentary/articles/alla");
 
 
                         // funkar inte.

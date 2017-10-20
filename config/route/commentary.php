@@ -132,24 +132,24 @@ return [
         //     "path" => "createcomment",
         //     "callable" => ["commController", "addComment"]
         // ],
-        [
-            "info" => "Redigera kommentar",
-            "requestMethod" => "get",
-            "path" => "editcomment",
-            "callable" => ["commController", "editComment"]
-        ],
-        [
-            "info" => "Redigera kommentar process",
-            "requestMethod" => "post",
-            "path" => "editcommentprocess",
-            "callable" => ["commController", "editCommentProcess"]
-        ],
-        [
-            "info" => "Lägg till gilla process",
-            "requestMethod" => "get",
-            "path" => "addlikeprocess",
-            "callable" => ["commController", "addLikeProcess"]
-        ],
+        // [
+        //     "info" => "Redigera kommentar",
+        //     "requestMethod" => "get",
+        //     "path" => "editcomment",
+        //     "callable" => ["commController", "editComment"]
+        // ],
+        // [
+        //     "info" => "Redigera kommentar process",
+        //     "requestMethod" => "post",
+        //     "path" => "editcommentprocess",
+        //     "callable" => ["commController", "editCommentProcess"]
+        // ],
+        // [
+        //     "info" => "Lägg till gilla process",
+        //     "requestMethod" => "get",
+        //     "path" => "addlikeprocess",
+        //     "callable" => ["commController", "addLikeProcess"]
+        // ],
         [
             "info" => "Gå till artikel",
             "requestMethod" => null,
