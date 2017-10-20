@@ -191,15 +191,15 @@ return [
                 return $obj;
             }
         ],
-        "database" => [
-            "shared" => true,
-            "callback" => function () {
-                $database = new \Maaa16\Database\Maaa16Database();
-                $database->configure("database.php");
-                $database->setDefaultsFromConfiguration();
-                return $database;
-            }
-        ],
+        // "database" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $database = new \Maaa16\Database\Maaa16Database();
+        //         $database->configure("database.php");
+        //         $database->setDefaultsFromConfiguration();
+        //         return $database;
+        //     }
+        // ],
         "db" => [
             "shared" => true,
             "callback" => function () {
@@ -208,14 +208,14 @@ return [
                 return $obj;
             }
         ],
-        "dbtest" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Anax\Database\DatabaseQueryBuilder();
-                $obj->configure("databaseconfig.php");
-                return $obj;
-            }
-        ],
+        // "dbtest" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $obj = new \Anax\Database\DatabaseQueryBuilder();
+        //         $obj->configure("databaseconfig.php");
+        //         return $obj;
+        //     }
+        // ],
         "admin" => [
             "shared" => true,
             "callback" => function () {

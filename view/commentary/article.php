@@ -143,6 +143,15 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
 
                     // Är man själv ägare till artikeln kan man inte ångra någon röst. Annars blir det som $cancelvote ovan.
                     $cancelarticlecommentvote = $ownarticlecomment ? "": $cancelarticlecommentvote;
+
+                    // Redigeringslänk för den som skrivit kommentaren.
+                    $editarticlecomment = "";
+                    if ($articlecomment->user == $session->get('userid')) {
+                        $editarticlecomment = "<a href='".url('commentary/updatearticlecomment/'.$article['article']->id."?articlecommentid=".$articlecomment->id)."'>Ändra</a>";
+                    }
+
+                    // Notis som läggs till om man redigerat en artikelkommentar
+                    $editedarticlecomment = ($articlecomment->updated != null) ? "<br />Redigerad ". $articlecomment->updated : "";
                     ?>
 
                     <tr class='articlecommentcontent'>
@@ -158,12 +167,14 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
                                     <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
                                 </a>
                             </div>
-
                         </td>
-                        <td class='articlecomment'><?= $filteredarticlecomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td class='articlecomment'>
+                            <?= $filteredarticlecomment ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class='small text-muted'><?= $editedarticlecomment ?></span>
+                        </td>
                         <td class='articlecommentauthor articlecomment' valign='top' align='right'>
                             <?= $articlecomment->created ?><br /><a href='<?= url('commentary/userinfo/'.$articlecommentauthor->id) ?>'><?= $articlecommentauthor->username ?></a>
-                            <br /><span class='small'><?= $cancelarticlecommentvote ?></span>
+                            <br /><span class='small'><?= $cancelarticlecommentvote ?></span><span class='small'><?= $editarticlecomment ?></span>
                         </td>
                     </tr>
                 <?php endforeach; ?>

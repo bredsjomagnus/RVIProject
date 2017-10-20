@@ -14,22 +14,22 @@ class Login implements InjectionAwareInterface
 
     public function createNewAccount($firstname, $surname, $email, $username, $passone, $passtwo)
     {
-        $this->di->get("database")->connect();
+        $this->di->get("db")->connect();
         $sql = "SELECT * FROM RVIXaccount WHERE username = '$username'";
         if ($passone != $passtwo) {
             $this->di->get("session")->set('createusererrormsg', "<br /><p class='formerror'>Nytt konto skapades inte.</p><p class='formerror'>Lösenordet var inte samma vid upprepning.</p>");
-        } else if ($this->di->get("database")->executeFetchAll($sql)) {
+        } else if ($this->di->get("db")->executeFetchAll($sql)) {
             $this->di->get("session")->set('createusererrormsg', "<br /><p class='formerror'>Nytt konto skapades inte.</p><p class='formerror'>Det finns redan konto med det användarnamnet.</p>");
         } else if ($passone == $passtwo) {
             $securepass = password_hash($passone, PASSWORD_DEFAULT);
             $sql = "INSERT INTO RVIXaccount (role, username, pass, firstname, surname, email) VALUES (?, ?, ?, ?, ?, ?)";
             $params = ['user', $username, $securepass, $firstname, $surname, $email];
-            $this->di->get("database")->execute($sql, $params);
+            $this->di->get("db")->execute($sql, $params);
             $this->di->get("session")->set("user", $username);
             $this->di->get("session")->set("email", $email);
             $this->di->get("session")->set("role", 'user');
             $this->di->get("cookie")->set("user", $username);
-            $this->di->get("session")->set("userid", $this->di->get("database")->lastInsertId());
+            $this->di->get("session")->set("userid", $this->di->get("db")->lastInsertId());
             $this->di->get("cookie")->set("firstname", $firstname);
         }
     }

@@ -1,4 +1,5 @@
-use RVIProject;
+-- use RVIProject;
+use maaa16;
 
 SELECT * FROM RVIXarticle WHERE tags LIKE '%rpg%';
 SELECT * FROM RVIXarticle;

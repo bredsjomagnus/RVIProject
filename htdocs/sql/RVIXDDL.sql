@@ -1,6 +1,7 @@
 -- CREATE DATABASE RVIProject CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-use RVIProject;
+-- use RVIProject;
+use maaa16;
 
 SET NAMES utf8mb4;
 
@@ -8,17 +9,17 @@ DROP VIEW IF EXISTS RVIXarticleView;
 DROP VIEW IF EXISTS RVIXanswerSumView;
 DROP VIEW IF EXISTS RVIXanswerView;
 
-DROP TABLE IF EXISTS RVIXarticlecommentvotes;
-DROP TABLE IF EXISTS RVIXarticlevotes;
-DROP TABLE IF EXISTS RVIXanswercommentvotes;
-DROP TABLE IF EXISTS RVIXanswervotes;
-DROP TABLE IF EXISTS RVIXarticlecomment;
-DROP TABLE IF EXISTS RVIXanswercomment;
-DROP TABLE IF EXISTS RVIXanswer;
-DROP TABLE IF EXISTS RVIXarticle;
-DROP TABLE IF EXISTS RVIXtags;
+-- DROP TABLE IF EXISTS RVIXarticlecommentvotes;
+-- DROP TABLE IF EXISTS RVIXarticlevotes;
+-- DROP TABLE IF EXISTS RVIXanswercommentvotes;
+-- DROP TABLE IF EXISTS RVIXanswervotes;
+-- DROP TABLE IF EXISTS RVIXarticlecomment;
+-- DROP TABLE IF EXISTS RVIXanswercomment;
+-- DROP TABLE IF EXISTS RVIXanswer;
+-- DROP TABLE IF EXISTS RVIXarticle;
+-- DROP TABLE IF EXISTS RVIXtags;
 
-DROP TABLE IF EXISTS RVIXaccount;
+-- DROP TABLE IF EXISTS RVIXaccount;
 
 CREATE TABLE IF NOT EXISTS RVIXaccount 
 (

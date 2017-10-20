@@ -100,10 +100,18 @@ return [
 
         // Update answer
         [
-            "info" => "Ångra röst på svar - process",
+            "info" => "Redigera svar",
             "requestMethod" => "get|post",
             "path" => "updateanswer/{id:digit}",
             "callable" => ["commController", "updateAnswer"]
+        ],
+
+        // Update articlecomment
+        [
+            "info" => "Redigera kommentar till artikel",
+            "requestMethod" => "get|post",
+            "path" => "updatearticlecomment/{id:digit}",
+            "callable" => ["commController", "updateArticleComment"]
         ],
 
 
