@@ -6,6 +6,7 @@ use \Maaa16\Commentary\AnswerSumView;
 
 $db         = $this->di->get("db");
 $session    = $this->di->get("session");
+$comm      = $this->di->get("comm");
 ?>
 <div class="container">
     <div class="row">
@@ -46,9 +47,11 @@ $session    = $this->di->get("session");
                     $user->setDb($db);
                     $user->find("id", $article['user']);
 
-                    $answersumview = new AnswerSumView();
-                    $answersumview->setDb($db);
-                    $answers = ($answersumview->find("articleid", $article['id'])) ? $answersumview->numbanswers : '0';
+
+                    // $answersumview = new AnswerSumView();
+                    // $answersumview->setDb($db);
+                    $answersum = $comm->articleAnswerSum($article['id']);
+                    $answers = (intval($answersum) != 0) ? $answersum : '0';
                     ?>
                     <tr>
                         <td><?= $answers ?></td>

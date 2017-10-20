@@ -4,6 +4,7 @@ namespace Anax\View;
 use \Anax\User\User;
 use \Maaa16\Commentary\AnswerSumView;
 use \Maaa16\Commentary\ArticleVotes;
+use \Maaa16\Commentary\Article;
 
 $comm   = $this->di->get("comm");
 $db     = $this->di->get("db");
@@ -40,19 +41,22 @@ $userpage->find("id", $uid);
                                 <th>Ställt frågor</th>
                             </tr>
                         </thead>
-                        <?php foreach ($articleview as $article) : ?>
+                        <?php foreach ($allusersarticles as $article) : ?>
                             <?php
-                            $user = new User();
-                            $user->setDb($db);
-                            $user->find("id", $article->userid);
+                            $articleuser = new User();
+                            $articleuser->setDb($db);
+                            $articleuser->find("id", $uid);
 
-                            $answersumview = new AnswerSumView();
-                            $answersumview->setDb($db);
-                            $answers = ($answersumview->find("articleid", $article->articleid)) ? $answersumview->numbanswers : '0';
+                            // $answersumview = new AnswerSumView();
+                            // $answersumview->setDb($db);
+                            // $answers = ($answersumview->find("articleid", $article->articleid)) ? $answersumview->numbanswers : '0';
 
-                            $articlevotesum             = $comm->getArticleVoteSum($article->articleid);
-                            $totnumbofarticlevotes      = $comm->getTotNumbOfAricleVotes($article->articleid);
-                            $totnumbofarticlecomments   = $comm->getTotNumbOfArticleComments($article->articleid);
+                            $answersum = $comm->articleAnswerSum($article->id);
+                            $answers = (intval($answersum) != 0) ? $answersum : '0';
+
+                            $articlevotesum             = $comm->getArticleVoteSum($article->id);
+                            $totnumbofarticlevotes      = $comm->getTotNumbOfAricleVotes($article->id);
+                            $totnumbofarticlecomments   = $comm->getTotNumbOfArticleComments($article->id);
 
                             $articlevotesum = ($articlevotesum == 0) ? 0 : $articlevotesum;
                             ?>
@@ -61,8 +65,8 @@ $userpage->find("id", $uid);
                                 <td><?= $articlevotesum ?></td>
                                 <td><?= $totnumbofarticlevotes ?></td>
                                 <td><?= $totnumbofarticlecomments ?></td>
-                                <td>
-                                    <a href='<?= url('commentary/article/'.$article->articleid) ?>'><?= $article->title ?></a>
+                                <td align='left'>
+                                    <a href='<?= url('commentary/article/'.$article->id) ?>'><?= $article->title ?></a>
                                     <br />
                                     <?php
                                     $tagpaths = explode(", ", $article->tagpaths);
@@ -72,7 +76,7 @@ $userpage->find("id", $uid);
                                     }
                                     ?>
                                     <br />
-                                    <span class='floatright author'>Ställd <?= substr($article->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$article->userid) ?>'><?= $article->username ?></a></span>
+                                    <span class='floatright author'>Ställd <?= substr($article->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$article->user) ?>'><?= $articleuser->username ?></a></span>
                                 </td>
 
                             </tr>
@@ -93,15 +97,19 @@ $userpage->find("id", $uid);
 
                             </tr>
                         </thead>
-                        <?php foreach ($answerview as $answer) : ?>
+                        <?php foreach ($allusersanswers as $answer) : ?>
                             <?php
-                            $user = new User();
-                            $user->setDb($db);
-                            $user->find("id", $answer->userid);
+                            $answeruser = new User();
+                            $answeruser->setDb($db);
+                            $answeruser->find("id", $uid);
 
-                            $answervotesum              = $comm->getAnswerVoteSum($answer->answerid);
-                            $totnumbofanswervotes       = $comm->getTotNumbOfAnswerVotes($answer->answerid);
-                            $totnumbofanswercomments    = $comm->getTotNumbOfAnswerComments($answer->answerid);
+                            $article = new Article();
+                            $article->setDb($db);
+                            $article->find("id", $answer->answerto);
+
+                            $answervotesum              = $comm->getAnswerVoteSum($answer->id);
+                            $totnumbofanswervotes       = $comm->getTotNumbOfAnswerVotes($answer->id);
+                            $totnumbofanswercomments    = $comm->getTotNumbOfAnswerComments($answer->id);
 
                             $answervotesum = ($answervotesum == 0) ? 0 : $answervotesum;
                             ?>
@@ -109,18 +117,18 @@ $userpage->find("id", $uid);
                                 <td><?= $answervotesum ?></td>
                                 <td><?= $totnumbofanswervotes ?></td>
                                 <td><?= $totnumbofanswercomments ?></td>
-                                <td>
-                                    <a href='<?= url('commentary/article/'.$answer->articleid) ?>'><?= $answer->title ?></a>
+                                <td align='left'>
+                                    <a href='<?= url('commentary/article/'.$article->id) ?>'><?= $article->title ?></a>
                                     <br />
                                     <?php
-                                    $tagpaths = explode(", ", $answer->tagpaths);
-                                    $tagnames = explode(", ", $answer->tags);
+                                    $tagpaths = explode(", ", $article->tagpaths);
+                                    $tagnames = explode(", ", $article->tags);
                                     for ($x = 0; $x < count($tagpaths); $x = $x +1) {
                                         echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
                                     }
                                     ?>
                                     <br />
-                                    <span class='floatright author'>Ställd <?= substr($answer->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$answer->articleuserid) ?>'><?= $answer->username ?></a></span>
+                                    <span class='floatright author'>Ställd <?= substr($answer->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$answer->user) ?>'><?= $answeruser->username ?></a></span>
                                 </td>
 
                             </tr>

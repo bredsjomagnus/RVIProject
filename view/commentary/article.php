@@ -261,6 +261,9 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
 
                     $totnumbanswervotes = $comm->getTotNumbOfAnswerVotes($answer->id);
 
+
+
+
                     //-------------------------- /HANTERING AV RÖSTVARIABLER ---------------------------------
 
                     $editanswer = "";
@@ -373,7 +376,13 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
                             // Är man själv ägare till artikeln kan man inte ångra någon röst. Annars blir det som $cancelvote ovan.
                             $cancelanswercommentvote   = $ownanswercomment ? "": $cancelanswercommentvote;
 
-                            // $totnumbanswercommentvotes = $comm->getTotNumbOfAnswerCommentVotes($answercomment->id);
+                            // Redigeringslänk för den som skrivit kommentaren.
+                            $editanswercomment = "";
+                            if ($answercomment->user == $session->get('userid')) {
+                                $editanswercomment = "<a href='".url('commentary/updateanswercomment/'.$article['article']->id."?answercommentid=".$answercomment->id)."'>Ändra</a>";
+                            }
+
+                            $editedanswercomment = ($answercomment->updated != null) ? "<br />Redigerad ". $answercomment->updated : "";
                             ?>
 
                             <tr class='answercommenttr'>
@@ -390,12 +399,15 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
                                         </a>
                                     </div>
                                 </td>
-                                <td align='left' class='answercomment'><?= $filteredanswercomment ?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td align='left' class='answercomment'>
+                                    <?= $filteredanswercomment ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class='small text-muted'><?= $editedanswercomment ?></span>
+                                </td>
                                 <td class='answercomment' valign='top' align='right'><?= $answercomment->created ?>
                                     <br />
                                     <a href='<?= url('commentary/userinfo/'.$answercommentauthor->id) ?>'><?= $answercommentauthor->username ?></a>
                                     <br />
-                                    <span class='small'><?= $cancelanswercommentvote ?></span>
+                                    <span class='small'><?= $cancelanswercommentvote ?></span><span class='small'><?= $editanswercomment ?></span>
                                 </td>
                             </tr>
                         <?php endif; ?>

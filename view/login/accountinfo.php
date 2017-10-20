@@ -14,7 +14,7 @@ $session    = $this->di->get("session");
     <br />
     <div class="row">
         <div class="col-md-12">
-            <?= var_dump($_SESSION); ?>
+            <!-- <?= var_dump($_SESSION); ?> -->
         </div>
     </div>
     <h1>KONTO<small> - <?= $account->username  ?></small></h1>

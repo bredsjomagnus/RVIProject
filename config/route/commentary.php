@@ -114,6 +114,14 @@ return [
             "callable" => ["commController", "updateArticleComment"]
         ],
 
+        // Update answercomment
+        [
+            "info" => "Redigera kommentar till svar",
+            "requestMethod" => "get|post",
+            "path" => "updateanswercomment/{id:digit}",
+            "callable" => ["commController", "updateAnswerComment"]
+        ],
+
 
 
 
