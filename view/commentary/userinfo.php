@@ -6,18 +6,29 @@ use \Maaa16\Commentary\AnswerSumView;
 use \Maaa16\Commentary\ArticleVotes;
 use \Maaa16\Commentary\Article;
 
-$comm   = $this->di->get("comm");
-$db     = $this->di->get("db");
+$comm       = $this->di->get("comm");
+$db         = $this->di->get("db");
+$session    = $this->di->get("session");
 
 $userpage = new User();
 $userpage->setDb($db);
 $userpage->find("id", $uid);
 
+$default = "http://i.imgur.com/CrOKsOd.png"; // Optional
+$gravatar = new \Maaa16\Gravatar\Gravatar(($userpage->email !== null) ? $userpage->email : 'na@na.na', $default);
+$gravatar->size = 150;
+$gravatar->rating = "G";
+$gravatar->border = "FF0000";
+
+$accountlink = ($userpage->id === $session->get("userid")) ?
+                    "<a class='btn btn-default' href='".url('accountinfo')."' >
+                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>&nbsp; Kontouppgifter
+                    </a>" :
+                    "";
+
 ?>
 <div class="container">
-
             <div class="row">
-
                 <div class="col-md-12">
                     <?= $tagbar ?>
                     <br>
@@ -27,10 +38,61 @@ $userpage->find("id", $uid);
 
                 </div>
             </div>
-            <h4><?= $userpage->username ?></h4>
+            <h4><?= strtoupper($userpage->firstname." ".$userpage->surname." - ".$userpage->username) ?></h4>
             <!-- <?= var_dump($articleview) ?> -->
+
+            <div class="row">
+                <div class="col-md-2">
+                    <?=$gravatar->toHTML()?>
+                    <br>
+                    <br>
+                    <span class='small'><?= $accountlink ?></span>
+                </div>
+
+                <div class="col-md-6">
+                    <table class='table'>
+                        <thead>
+                            <tr class='userinforankheader'>
+                                <th>Frågor</th>
+                                <th>Svar</th>
+                                <th>Kommentarer</th>
+                                <th>Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align='center'><?= $numbarticles ?></td>
+                                <td><?= $numbanswers ?></td>
+                                <td><?= $numbcomments ?></td>
+                                <td><?= $rank ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table">
+                        <tr>
+                            <td><b>Användarnamn</b></td><td><?= $userpage->username ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>Förnamn</b></td><td><?= $userpage->firstname ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>Efternamn</b></td><td><?= $userpage->surname ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>Email</b></td><td><?= ($userpage->email) ? $userpage->email : "" ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6">
+                    <h5>FRÅGOR</h5>
                     <table class='table userinfotable'>
                         <thead>
                             <tr class='userinfotableheader'>
@@ -85,7 +147,7 @@ $userpage->find("id", $uid);
                 </div>
                 <!-- /articles -->
 
-
+                <h5>SVAR</h5>
                 <div class="col-md-6">
                     <table class='table userinfotable'>
                         <thead>

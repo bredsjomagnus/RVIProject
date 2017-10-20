@@ -273,6 +273,10 @@ textarea:focus {
 .userinfotable {
   text-align: center;
 }
+.userinforankheader {
+  background-color: #b0b0ae;
+  font-size: 0.9em;
+}
 /**
  * Bootstrap-Markdown.less
  *

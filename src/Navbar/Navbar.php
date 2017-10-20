@@ -61,7 +61,7 @@ class Navbar implements ConfigureInterface, InjectionAwareInterface
 
                 // För att se om accountinfo är aktiv eller inte kontrolleras route via PATH_INFO¨.
                 $accountclass = ((isset($_SERVER['PATH_INFO'])) && $_SERVER['PATH_INFO'] == "accountinfo") ? "navactive" : "notnavacitve";
-                $navhtml .= "<li style='float: right'><a class='{$accountclass}' href='". $this->di->get("url")->create('accountinfo') ."#top'>". $this->di->get("cookie")->get('firstname', "") ."</a></li>";
+                $navhtml .= "<li style='float: right'><a class='{$accountclass}' href='". $this->di->get("url")->create('commentary/userinfo/'.$this->di->get("session")->get("userid")) ."#top'>". $this->di->get("cookie")->get('firstname', "") ."</a></li>";
             }
         }
         return $navhtml;

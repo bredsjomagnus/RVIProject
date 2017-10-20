@@ -11,6 +11,7 @@ $session    = $this->di->get("session");
 
 <div class="container">
     <p>Dagens datum: <?= date("Y-m-d") ?></p>
+    <a href="<?= url('commentary/userinfo/'.$session->get("userid")) ?>">Statistik</a>
     <br />
     <div class="row">
         <div class="col-md-12">

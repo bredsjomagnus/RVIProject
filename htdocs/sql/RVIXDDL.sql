@@ -1,7 +1,7 @@
 -- CREATE DATABASE RVIProject CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- use RVIProject;
-use maaa16;
+use RVIProject;
+-- use maaa16;
 
 SET NAMES utf8mb4;
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS RVIXaccount
 	id int(5) auto_increment primary key,
 	active char(5) default 'yes',
 	role char(20) not null,
-	rank VARCHAR(100) DEFAULT 'novice',
+	rank INT DEFAULT 1,
 	username varchar(20) not null unique,
 	pass char(100) not null,
 	firstname char(20) not null,
