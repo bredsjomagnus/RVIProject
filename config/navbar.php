@@ -16,11 +16,11 @@ return [
                 "route" => "",
                 "class" => ""
             ],
-            "om" => [
-                "text" => "OM",
-                "route" => "about",
-                "class" => ""
-            ],
+            // "om" => [
+            //     "text" => "OM",
+            //     "route" => "about",
+            //     "class" => ""
+            // ],
             // "redovisningar" => [
             //     "text" => "REDOVISNINGAR",
             //     "route" => "report",

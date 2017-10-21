@@ -56,6 +56,7 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                                 <th>Frågor</th>
                                 <th>Svar</th>
                                 <th>Kommentarer</th>
+                                <th>Aktivitet</th>
                                 <th>Rank</th>
                             </tr>
                         </thead>
@@ -64,6 +65,7 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                                 <td align='center'><?= $numbarticles ?></td>
                                 <td><?= $numbanswers ?></td>
                                 <td><?= $numbcomments ?></td>
+                                <td><?= $useractivity[$userpage->id] ?></td>
                                 <td><?= $rank ?></td>
                             </tr>
                         </tbody>
@@ -97,7 +99,7 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                         <thead>
                             <tr class='userinfotableheader'>
                                 <th>Svar</th>
-                                <th>Rang</th>
+                                <th>Frågerank</th>
                                 <th>Röster</th>
                                 <th>Kommentarer</th>
                                 <th>Ställt frågor</th>

@@ -11,7 +11,6 @@ $comm       = $this->di->get("comm");
 ?>
 <div class="container">
     <div class="row">
-
         <div class="col-md-12">
             <?= $tagbar ?>
         </div>
@@ -124,4 +123,111 @@ $comm       = $this->di->get("comm");
             </table>
         </div>
     </div>
+    <!-- /rad 1 -->
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>De fem mest aktiva användarna</h3>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th colspan=2>Användare</th>
+                        <th>Frågor</th>
+                        <th>Svar</th>
+                        <th>Kommentarer</th>
+                        <th>Aktivitet</th>
+                        <th>Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($useractivity as $id => $activity) : ?>
+                    <?php
+                    $activityuser = new User();
+                    $activityuser->setDb($db);
+                    $activityuser->find("id", $id);
+
+                    $default = "http://i.imgur.com/CrOKsOd.png"; // Optional
+                    $gravatar = new \Maaa16\Gravatar\Gravatar(($activityuser->email !== null) ? $activityuser->email : 'na@na.na', $default);
+                    $gravatar->size = 50;
+                    $gravatar->rating = "G";
+                    $gravatar->border = "FF0000";
+
+                    $numbarticles           = $comm->getUserNumbArticles($id);
+                    $numbanswers            = $comm->getUserNumbAnswers($id);
+                    $numbarticlecomments    = $comm->getUserNumbArticleComments($id);
+                    $numbanswercomments     = $comm->getUserNumbAnswerComments($id);
+
+                    $numbcomments = intval($numbarticlecomments) + intval($numbanswercomments);
+
+                    $rank                   = $comm->getUserRank($id);
+                    // $rank                   = $comm->setUserRank($id);
+
+                    ?>
+                    <tr>
+                        <td><?=$gravatar->toHTML()?></td>
+                        <td>
+                            <a href='<?= url('commentary/userinfo/'.$id) ?>'><?= $activityuser->firstname." ".$activityuser->surname ?></a>
+                        </td>
+                        <td align='center'><?= $numbarticles ?></td>
+                        <td><?= $numbanswers ?></td>
+                        <td><?= $numbcomments ?></td>
+                        <td><?= $activity ?></td>
+                        <td><?= $rank ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <!-- /rad2 kolumn1 -->
+
+        <div class="col-md-6">
+            <h3>De fem högst rankade användarna</h3>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th colspan=2>Användare</th>
+                        <th>Frågor</th>
+                        <th>Svar</th>
+                        <th>Kommentarer</th>
+                        <th>Aktivitet</th>
+                        <th>Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($userbyrank as $rankuser) : ?>
+                    <?php
+                    $default = "http://i.imgur.com/CrOKsOd.png"; // Optional
+                    $gravatar = new \Maaa16\Gravatar\Gravatar(($rankuser->email !== null) ? $rankuser->email : 'na@na.na', $default);
+                    $gravatar->size = 50;
+                    $gravatar->rating = "G";
+                    $gravatar->border = "FF0000";
+
+                    $numbarticles           = $comm->getUserNumbArticles($rankuser->id);
+                    $numbanswers            = $comm->getUserNumbAnswers($rankuser->id);
+                    $numbarticlecomments    = $comm->getUserNumbArticleComments($rankuser->id);
+                    $numbanswercomments     = $comm->getUserNumbAnswerComments($rankuser->id);
+
+                    $numbcomments = intval($numbarticlecomments) + intval($numbanswercomments);
+
+                    $rank                   = $comm->getUserRank($rankuser->id);
+                    // $rank                   = $comm->setUserRank($id);
+
+                    ?>
+                    <tr>
+                        <td><?=$gravatar->toHTML()?></td>
+                        <td>
+                            <a href='<?= url('commentary/userinfo/'.$rankuser->id) ?>'><?= $rankuser->firstname." ".$rankuser->surname ?></a>
+                        </td>
+                        <td align='center'><?= $numbarticles ?></td>
+                        <td><?= $numbanswers ?></td>
+                        <td><?= $numbcomments ?></td>
+                        <td><?= $useractivity[$rankuser->id] ?></td>
+                        <td><?= $rank ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /rad2 -->
 </div>
