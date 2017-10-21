@@ -19,6 +19,8 @@ $author->setDb($db);
 $author->find("id", $article['article']->user);
 
 $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['article']->updated : "";
+
+
 ?>
 
 <div class="container">
@@ -286,10 +288,30 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
 
                     $editedanswer = ($answer->updated != null) ? "Redigerad ". $answer->updated : "";
 
+                    $acceptanswerbtn = ($ownarticle && $article['article']->user != $answer->user) ?
+                                            "<a class='btn btn-default btn-xs' href='".url('commentary/acceptanswer/'.$article['article']->id)."?answerid=".$answer->id."'>
+                                                <span style='color: green;' class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                                &nbsp; Acceptera svar
+                                            </a>" :
+                                            "";
+
+
+                    $acceptedclass = "";
+                    if ($articlehaveacceptedanswer) {
+                        $acceptedclass = ($acceptedanswer[0]->id == $answer->id) ? "acceptedanserrow" : "";
+
+                        $acceptanswerbtn = ($ownarticle && $acceptedanswer[0]->id == $answer->id) ?
+                                                    "<a class='btn btn-default btn-xs' href='".url('commentary/cancelacceptanswer/'.$article['article']->id)."?answerid=".$answer->id."'>
+                                                        <span style='color: red;' class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                                        &nbsp; Ångra acceptera svar
+                                                    </a>" :
+                                                    "";
+                    }
+
                     ?>
 
                     <!-- AVATAR AND MESSAGE -->
-                    <tr>
+                    <tr class='<?= $acceptedclass ?>'>
                         <td valign=top align='center' colspan=2>
                             <?=$gravatar->toHTML()?>
                             <br />
@@ -329,7 +351,7 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
                                     <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
                                 </a>
                             </div>
-
+                            <?= $acceptanswerbtn ?>
                             <div class='numbvotediv'>
                                 <span class='small'>Antal röster: <?= $totnumbanswervotes ?> st <?= $cancelanswervote ?></span>
                             </div>

@@ -1,5 +1,5 @@
--- use RVIProject;
-use maaa16;
+use RVIProject;
+-- use maaa16;
 
 SELECT * FROM RVIXarticle WHERE tags LIKE '%rpg%';
 SELECT * FROM RVIXarticle;
@@ -34,3 +34,10 @@ SELECT * FROM RVIXarticlecomment WHERE id = 3;
 SELECT * FROM RVIXanswervotes;
 
 SELECT * FROM RVIXanswercommentvotes;
+
+SELECT * FROM RVIXanswer ORDER BY created DESC LIMIT 5;
+
+-- ALTER TABLE RVIXanswer
+-- ADD COLUMN accepted VARCHAR(10) DEFAULT 'no';
+
+UPDATE RVIXaccount SET rank = 1;

@@ -163,6 +163,20 @@ return [
             "callable" => ["commController", "tagsPage"]
         ],
 
+        // accept answers
+        [
+            "info" => "Acceptera ett svar - process",
+            "requestMethod" => "get",
+            "path" => "acceptanswer/{id:digit}",
+            "callable" => ["commController", "acceptAnswerProcess"]
+        ],
+        [
+            "info" => "Acceptera ett svar - process",
+            "requestMethod" => "get",
+            "path" => "cancelacceptanswer/{id:digit}",
+            "callable" => ["commController", "cancelAcceptAnswerProcess"]
+        ],
+
         // Articles Routes
         // [
         //     "info" => "Artiklar",
