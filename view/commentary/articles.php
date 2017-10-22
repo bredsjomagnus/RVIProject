@@ -40,6 +40,7 @@ $comm       = $this->di->get("comm");
                     <thead>
                         <tr>
                             <th>Svar</th>
+                            <th>Rank</th>
                             <th>
                                 Fråga
                                 &nbsp;&nbsp;
@@ -64,9 +65,12 @@ $comm       = $this->di->get("comm");
                         // $answersumview->setDb($db);
                         $answersum = $comm->articleAnswerSum($article->id);
                         $answers = (intval($answersum) != 0) ? $answersum : '0';
+                        $articlevotesum             = $comm->getArticleVoteSum($article->id);
+                        $articlevotesum = ($articlevotesum == 0) ? 0 : $articlevotesum;
                         ?>
                         <tr>
                             <td><?= $answers ?></td>
+                            <td><?= $articlevotesum ?></td>
                             <td>
                                 <a href='<?= url('commentary/article/'.$article->id) ?>'><?= $article->title ?></a>
                                 <br />

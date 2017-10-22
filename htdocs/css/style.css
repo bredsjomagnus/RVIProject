@@ -273,6 +273,9 @@ textarea:focus {
 .userinfotable {
   text-align: center;
 }
+.userinfotable .userinfoanswerrowclass {
+  background-color: #c9d7c9;
+}
 .userinforankheader {
   background-color: #b0b0ae;
   font-size: 0.9em;

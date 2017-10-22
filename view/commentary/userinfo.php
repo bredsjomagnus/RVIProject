@@ -157,7 +157,8 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                                 <th>Rang</th>
                                 <th>Röster</th>
                                 <th>Kommentarer</th>
-                                <th>Svarat på frågor</th>
+                                <th>Rang</th>
+                                <th>Svarat på fråga</th>
 
                             </tr>
                         </thead>
@@ -176,11 +177,14 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                             $totnumbofanswercomments    = $comm->getTotNumbOfAnswerComments($answer->id);
 
                             $answervotesum = ($answervotesum == 0) ? 0 : $answervotesum;
+
+                            $userinfoanswerrowclass = ($answer->accepted == 'yes') ? 'userinfoanswerrowclass' : '';
                             ?>
-                            <tr>
+                            <tr class='<?= $userinfoanswerrowclass ?>'>
                                 <td><?= $answervotesum ?></td>
                                 <td><?= $totnumbofanswervotes ?></td>
                                 <td><?= $totnumbofanswercomments ?></td>
+                                <td><?= $answer->score ?></td>
                                 <td align='left'>
                                     <a href='<?= url('commentary/article/'.$article->id) ?>'><?= $article->title ?></a>
                                     <br />
