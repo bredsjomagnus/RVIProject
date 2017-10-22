@@ -14,7 +14,7 @@ RVIProject
 
 Ett skolarbete som bygger på modulen maaa16/commentary
 
-### Commentary
+### Commentary för Anax
 #### För installation av modulen
 
 composer require maaa16/commentary
@@ -33,10 +33,12 @@ Det behövs andra route filer till config/route.php. Det finns exempel i vendor/
 
 Lägg till di service i config/di.php. Det finns exempel i vendor/maaa16/commentary/config/di.php.
 
+Delar av Anax/HTMLForm har redigerats. De filer som redigerats ligger under src/HTMLForm. Ändringen är för att kunna lägga till data-provider i textareas, som då möjliggör användning av [bootstrap-markdown.js](http://github.com/toopay/bootstrap-markdown) v2.10.0 av Taufan Aditya.
+
 ### Paginator
 #### För installation av paginatorn
-Denna modul finns inte på packagist utan måste tas härifrån src/Paginator
+Denna finns inte på packagist utan måste tas härifrån via src/Paginator
 
-####License
+### License
 
 This software carries a MIT license.
