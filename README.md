@@ -14,8 +14,8 @@ RVIProject
 
 Ett skolarbete som bygger på modulen maaa16/commentary
 
-###Commentary
-####För installation av modulen
+### Commentary
+#### För installation av modulen
 
 composer require maaa16/commentary
 
@@ -23,18 +23,18 @@ Konfigurationsfiler
 
 rsync -av vendor/maaa16/commentary/config/commentary* config
 
-####Route filer
+#### Route filer
 
 rsync -av vendor/maaa16/commentary/config/route/commentary.php config/route
 
 Det behövs andra route filer till config/route.php. Det finns exempel i vendor/maaa16/commentary/config/route.php.
 
-####DI service
+#### DI service
 
 Lägg till di service i config/di.php. Det finns exempel i vendor/maaa16/commentary/config/di.php.
 
-###paginator
-####För installation av paginatorn
+### Paginator
+#### För installation av paginatorn
 Denna modul finns inte på packagist utan måste tas härifrån src/Paginator
 
 ####License
