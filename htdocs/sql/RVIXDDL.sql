@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS RVIXanswer (
      user INT,
      accepted VARCHAR(10) DEFAULT 'no',
      `data` TEXT,
+     score INT,
 	 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
      updated TIMESTAMP NULL,
      deleted TIMESTAMP NULL,

@@ -43,13 +43,15 @@ $comm       = $this->di->get("comm");
                             <th>
                                 Fråga
                                 &nbsp;&nbsp;
-                                <a href='<?= url('commentary/articles/'.$tagpath.'?orderby=title&orderas=DESC') ?>'>
+                                <a href='<?= url('commentary/articles/'.$tagpath.'?orderby=title&orderas=ASC') ?>'>
                                     <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
                                 </a>
 
-                                <a href='<?= url('commentary/articles/'.$tagpath.'?orderby=title&orderas=ASC') ?>'>
+                                <a href='<?= url('commentary/articles/'.$tagpath.'?orderby=title&orderas=DESC') ?>'>
                                     <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                                 </a>
+
+
                             </th>
                         </tr>
                     </thead>

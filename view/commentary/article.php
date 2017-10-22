@@ -208,6 +208,28 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
 
     <br>
     <br>
+
+    <div class="row">
+        <span class='small'>
+            Sortera efter rank: &nbsp;
+            <a href='<?= url('commentary/article/'.$article['article']->id.'?orderby=score&orderas=asc') ?>'>
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </a>
+            <a href='<?= url('commentary/article/'.$article['article']->id.'?orderby=score&orderas=desc') ?>'>
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+            </a>
+            &nbsp; | &nbsp;&nbsp;
+            Sortera efter datum: &nbsp;
+            <a href='<?= url('commentary/article/'.$article['article']->id.'?orderby=created&orderas=asc') ?>'>
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </a>
+            <a href='<?= url('commentary/article/'.$article['article']->id.'?orderby=created&orderas=desc') ?>'>
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+            </a>
+        </span>
+    </div>
+    <br>
+    <br>
     <div class="row">
         <div class="col-md-8">
             <table class='answertable'>
