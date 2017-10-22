@@ -56,8 +56,9 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                                 <th>Frågor</th>
                                 <th>Svar</th>
                                 <th>Kommentarer</th>
+                                <th># Röstningar</th>
                                 <th>Aktivitet</th>
-                                <th>Rank</th>
+                                <th>Rang</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,6 +66,7 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                                 <td align='center'><?= $numbarticles ?></td>
                                 <td><?= $numbanswers ?></td>
                                 <td><?= $numbcomments ?></td>
+                                <td><?= $totnumberofcomments ?></td>
                                 <td><?= $useractivity[$userpage->id] ?></td>
                                 <td><?= $rank ?></td>
                             </tr>
@@ -98,11 +100,12 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                     <table class='table userinfotable'>
                         <thead>
                             <tr class='userinfotableheader'>
-                                <th>Svar</th>
-                                <th>Frågerank</th>
-                                <th>Röster</th>
-                                <th>Kommentarer</th>
-                                <th>Ställt frågor</th>
+                                <th># Svar</th>
+                                <th>S:a Röst</th>
+                                <th># Röst</th>
+                                <th>Rang</th>
+                                <th>Komm.</th>
+                                <th>Fråga</th>
                             </tr>
                         </thead>
                         <?php foreach ($allusersarticles as $article) : ?>
@@ -122,12 +125,15 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                             $totnumbofarticlevotes      = $comm->getTotNumbOfAricleVotes($article->id);
                             $totnumbofarticlecomments   = $comm->getTotNumbOfArticleComments($article->id);
 
+                            $articlerangsum             = $comm->getOneArticleScore($article->id);
+
                             $articlevotesum = ($articlevotesum == 0) ? 0 : $articlevotesum;
                             ?>
                             <tr>
                                 <td><?= $answers ?></td>
                                 <td><?= $articlevotesum ?></td>
                                 <td><?= $totnumbofarticlevotes ?></td>
+                                <td><?= $articlerangsum ?> </td>
                                 <td><?= $totnumbofarticlecomments ?></td>
                                 <td align='left'>
                                     <a href='<?= url('commentary/article/'.$article->id) ?>'><?= $article->title ?></a>

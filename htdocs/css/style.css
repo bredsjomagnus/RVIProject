@@ -2,8 +2,11 @@
 * importerar de lessmoduler ur foldern modules som skall bygga upp
 * style.css filen
 */
+body {
+  background-color: #ededed;
+}
 .navbar-wrap .navbar {
-  background-color: #3a3c5e;
+  background-color: black;
 }
 .navbar-wrap .navbar a.navactive {
   color: white;
@@ -26,6 +29,16 @@
 }
 .navbar-wrap .navbar-default .navbar-nav > li > a:hover {
   color: white;
+}
+.navbar-wrap .brandimg {
+  height: 30px;
+  margin-left: 180px;
+  margin-top: -7px;
+}
+.navbar-wrap .brandtext {
+  height: 30px;
+  margin-left: 235px;
+  color: #e9ae61;
 }
 .main-wrap hr {
   border-top: 1px solid #b3b3b3;
@@ -110,7 +123,7 @@
 }
 .footer-wrap .footer {
   height: 200px;
-  background-color: #3a3c5e;
+  background-color: black;
 }
 .footer-wrap .footer p {
   color: white;
@@ -298,6 +311,10 @@ li > a.deadpaginatorarrow {
 }
 .articlestable {
   min-height: 400px;
+}
+.articlesortinfo {
+  margin-left: 30px;
+  color: #a77777;
 }
 /**
  * Bootstrap-Markdown.less

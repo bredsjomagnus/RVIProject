@@ -5,7 +5,7 @@ title: "Om | maaa16"
 Studenten och Commentary
 =========================
 
-Jag, studenten bakom det hela, heter Magnus Andersson.
+Jag, studenten bakom det hela, heter Magnus Andersson (magnusandersson076@gmail.com).
 
 
 ###Commentary för Anax

@@ -40,7 +40,9 @@ $comm       = $this->di->get("comm");
                     <thead>
                         <tr>
                             <th>Svar</th>
-                            <th>Rank</th>
+                            <th>S:a Röst</th>
+                            <th># Röst</th>
+                            <th>Rang</th>
                             <th>
                                 Fråga
                                 &nbsp;&nbsp;
@@ -67,10 +69,17 @@ $comm       = $this->di->get("comm");
                         $answers = (intval($answersum) != 0) ? $answersum : '0';
                         $articlevotesum             = $comm->getArticleVoteSum($article->id);
                         $articlevotesum = ($articlevotesum == 0) ? 0 : $articlevotesum;
+
+                        $totnumbofarticlevotes      = $comm->getTotNumbOfAricleVotes($article->id);
+
+                        $articlerangsum             = $comm->getOneArticleScore($article->id);
+
                         ?>
                         <tr>
                             <td><?= $answers ?></td>
                             <td><?= $articlevotesum ?></td>
+                            <td><?= $totnumbofarticlevotes ?></td>
+                            <td><?= $articlerangsum ?></td>
                             <td>
                                 <a href='<?= url('commentary/article/'.$article->id) ?>'><?= $article->title ?></a>
                                 <br />
