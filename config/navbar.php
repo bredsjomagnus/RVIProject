@@ -16,11 +16,6 @@ return [
                 "route" => "",
                 "class" => ""
             ],
-            // "om" => [
-            //     "text" => "OM",
-            //     "route" => "about",
-            //     "class" => ""
-            // ],
             // "redovisningar" => [
             //     "text" => "REDOVISNINGAR",
             //     "route" => "report",
@@ -34,6 +29,11 @@ return [
             "tags" => [
                 "text" => "Taggar",
                 "route" => "commentary/tags",
+                "class" => ""
+            ],
+            "om" => [
+                "text" => "Om",
+                "route" => "about",
                 "class" => ""
             ],
             // "books" => [

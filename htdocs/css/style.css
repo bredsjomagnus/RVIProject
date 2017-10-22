@@ -280,6 +280,22 @@ textarea:focus {
 .acceptedanserrow {
   background-color: #c9d7c9;
 }
+li > a.paginatoractive {
+  background-color: #ae7d7d;
+  color: white;
+}
+li > a.paginatoractive:hover {
+  background-color: #9f6868;
+  color: white;
+}
+li > a.deadpaginatorarrow {
+  pointer-events: none;
+  cursor: default;
+  color: white;
+}
+.articlestable {
+  min-height: 400px;
+}
 /**
  * Bootstrap-Markdown.less
  *

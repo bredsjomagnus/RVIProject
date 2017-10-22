@@ -94,23 +94,23 @@ return [
                 return $navbar;
             }
         ],
-        "rem" => [
-            "shared" => true,
-            "callback" => function () {
-                $rem = new \Anax\RemServer\RemServer();
-                $rem->configure("remserver.php");
-                $rem->injectSession($this->get("session"));
-                return $rem;
-            }
-        ],
-        "remController" => [
-            "shared" => false,
-            "callback" => function () {
-                $remController = new \Anax\RemServer\RemServerController();
-                $remController->setDI($this);
-                return $remController;
-            }
-        ],
+        // "rem" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $rem = new \Anax\RemServer\RemServer();
+        //         $rem->configure("remserver.php");
+        //         $rem->injectSession($this->get("session"));
+        //         return $rem;
+        //     }
+        // ],
+        // "remController" => [
+        //     "shared" => false,
+        //     "callback" => function () {
+        //         $remController = new \Anax\RemServer\RemServerController();
+        //         $remController->setDI($this);
+        //         return $remController;
+        //     }
+        // ],
         "articleFactory" => [
             "shared" => true,
             "callback" => function () {
@@ -167,30 +167,30 @@ return [
                 return $obj;
             }
         ],
-        "bookController" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Anax\Book\BookController();
-                $obj->setDI($this);
-                return $obj;
-            }
-        ],
-        "contentController" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Maaa16\Content\ContentController();
-                $obj->setDI($this);
-                return $obj;
-            }
-        ],
-        "contentFactory" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Maaa16\Content\ContentFactory();
-                $obj->setDI($this);
-                return $obj;
-            }
-        ],
+        // "bookController" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $obj = new \Anax\Book\BookController();
+        //         $obj->setDI($this);
+        //         return $obj;
+        //     }
+        // ],
+        // "contentController" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $obj = new \Maaa16\Content\ContentController();
+        //         $obj->setDI($this);
+        //         return $obj;
+        //     }
+        // ],
+        // "contentFactory" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $obj = new \Maaa16\Content\ContentFactory();
+        //         $obj->setDI($this);
+        //         return $obj;
+        //     }
+        // ],
         // "database" => [
         //     "shared" => true,
         //     "callback" => function () {
@@ -222,6 +222,14 @@ return [
                 $admin = new \Maaa16\Admin\Admin();
                 $admin->setDI($this);
                 return $admin;
+            }
+        ],
+        "paginator" => [
+            "shared" => true,
+            "callback" => function () {
+                $paginator = new \Maaa16\Paginator\Paginator();
+                $paginator->setDI($this);
+                return $paginator;
             }
         ],
         "adminController" => [

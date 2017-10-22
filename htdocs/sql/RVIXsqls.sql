@@ -37,7 +37,9 @@ SELECT * FROM RVIXanswercommentvotes;
 
 SELECT * FROM RVIXanswer ORDER BY created DESC LIMIT 5;
 
+SELECT * FROM RVIXanswer WHERE answerto = 4 AND accepted = 'yes';
+
 -- ALTER TABLE RVIXanswer
 -- ADD COLUMN accepted VARCHAR(10) DEFAULT 'no';
 
-UPDATE RVIXaccount SET rank = 1;
+UPDATE RVIXaccount SET rank = 0;

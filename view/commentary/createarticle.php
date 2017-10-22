@@ -1,6 +1,6 @@
 <div class="container">
     <div class="container">
-        <h3>SKAPA INNEHÅLL PÅ SIDAN</h3>
+        <h3>FRÅGA</h3>
         <div class="row">
             <div class="col-md-12">
                 <a href=<?= $this->di->get("url")->create("commentary/articles/alla") ?>>Tillbaka</a>

@@ -1,7 +1,7 @@
 -- CREATE DATABASE RVIProject CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- use RVIProject;
-use maaa16;
+use RVIProject;
+-- use maaa16;
 
 SET NAMES utf8mb4;
 

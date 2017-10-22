@@ -307,9 +307,7 @@ $editarticle = ($article['article']->updated != null) ? "Redigerad ". $article['
                                                     </a>" :
                                                     "";
                     }
-
                     ?>
-
                     <!-- AVATAR AND MESSAGE -->
                     <tr class='<?= $acceptedclass ?>'>
                         <td valign=top align='center' colspan=2>
