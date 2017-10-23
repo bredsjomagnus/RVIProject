@@ -31,6 +31,8 @@ $comm       = $this->di->get("comm");
             <?= $questionlink ?>
         </div>
     </div>
+    <br>
+    <br>
     <!-- <?= var_dump($articles) ?> -->
     <div class="row">
         <div class="col-md-12">

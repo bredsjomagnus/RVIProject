@@ -13,7 +13,7 @@ return [
         "items" => [
             "hem" => [
                 "text" => "Översikt",
-                "route" => "",
+                "route" => "commentary/overview",
                 "class" => ""
             ],
             // "redovisningar" => [
@@ -27,7 +27,7 @@ return [
                 "class" => ""
             ],
             "tags" => [
-                "text" => "Taggar",
+                "text" => "Etiketter",
                 "route" => "commentary/tags",
                 "class" => ""
             ],

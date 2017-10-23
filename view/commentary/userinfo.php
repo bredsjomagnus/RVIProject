@@ -210,7 +210,109 @@ $accountlink = ($userpage->id === $session->get("userid")) ?
                     </table>
                 </div>
             </div>
+            <!-- /row -->
 
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>KOMMENTAR PÅ FRÅGOR</h5>
+                    <table class='table userinfotable'>
+                        <thead>
+                            <tr class='userinfotableheader'>
+                                <th class='userinfoarticlecommentcell' colspan=5>Rang</th>
+                                <th>Kommenterat fråga</th>
+
+                            </tr>
+                        </thead>
+                        <?php foreach ($allusersarticlecomments as $articlecomment) : ?>
+                            <?php
+                            $articlecommentuser = new User();
+                            $articlecommentuser->setDb($db);
+                            $articlecommentuser->find("id", $uid);
+
+                            $article = new Article();
+                            $article->setDb($db);
+                            $article->find("id", $articlecomment->commentto);
+
+                            $userofarticlecommented = new User();
+                            $userofarticlecommented->setDb($db);
+                            $userofarticlecommented->find("id", $article->user);
+
+                            $articlecommentvotesum = $comm->getArticleCommentVoteSum($articlecomment->id);
+
+                            $articlecommentvotesum = ($articlecommentvotesum == 0) ? 0 : $articlecommentvotesum;
+                            ?>
+                            <tr>
+                                <td colspan=5><?= $articlecommentvotesum ?></td>
+                                <td align='left'>
+                                    <a href='<?= url('commentary/article/'.$article->id) ?>'><?= $article->title ?></a>
+                                    <br />
+                                    <?php
+                                    $tagpaths = explode(", ", $article->tagpaths);
+                                    $tagnames = explode(", ", $article->tags);
+                                    for ($x = 0; $x < count($tagpaths); $x = $x +1) {
+                                        echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
+                                    }
+                                    ?>
+                                    <br />
+                                    <span class='floatright author'>Ställd <?= substr($userofarticlecommented->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$article->user) ?>'><?= $userofarticlecommented->username ?></a></span>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <h5>KOMMENTAR PÅ SVAR</h5>
+                    <table class='table userinfotable'>
+                        <thead>
+                            <tr class='userinfotableheader'>
+                                <th class='userinfoarticlecommentcell' colspan=5>Rang</th>
+                                <th>Kommenterat svar på fråga</th>
+
+                            </tr>
+                        </thead>
+                        <?php foreach ($allusersanswercomments as $answercomment) : ?>
+                            <?php
+                            $answercommentuser = new User();
+                            $answercommentuser->setDb($db);
+                            $answercommentuser->find("id", $uid);
+
+                            $articleanswercomment = new Article();
+                            $articleanswercomment->setDb($db);
+                            $articleanswercomment->find("id", $answercomment->articleid);
+
+                            $userofanswercommented = new User();
+                            $userofanswercommented->setDb($db);
+                            $userofanswercommented->find("id", $articleanswercomment->user);
+
+                            $answercommentvotesum = $comm->getAnswerCommentVoteSum($answercomment->id);
+
+                            $answercommentvotesum = ($answercommentvotesum == 0) ? 0 : $answercommentvotesum;
+                            ?>
+                            <tr>
+                                <td colspan=5><?= $answercommentvotesum ?></td>
+                                <td align='left'>
+                                    <a href='<?= url('commentary/article/'.$articleanswercomment->id) ?>'><?= $articleanswercomment->title ?></a>
+                                    <br />
+                                    <?php
+                                    $tagpaths = explode(", ", $articleanswercomment->tagpaths);
+                                    $tagnames = explode(", ", $articleanswercomment->tags);
+                                    for ($x = 0; $x < count($tagpaths); $x = $x +1) {
+                                        echo "<span><a class='tags' href='".url('commentary/articles/'.$tagpaths[$x])."' >".$tagnames[$x]."</a></span>&nbsp;";
+                                    }
+                                    ?>
+                                    <br />
+                                    <span class='floatright author'>Ställd <?= substr($userofanswercommented->created, 0, 16) ?> av <a href='<?= url('commentary/userinfo/'.$articleanswercomment->user) ?>'><?= $userofanswercommented->username ?></a></span>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+
+            </div>
+            <!-- /row -->
 
 
 

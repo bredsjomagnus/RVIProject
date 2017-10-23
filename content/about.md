@@ -1,5 +1,5 @@
 ---
-title: "Om | maaa16"
+title: "Om | Allt om Jakt"
 ...
 
 Studenten och Commentary

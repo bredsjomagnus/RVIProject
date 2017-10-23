@@ -15,7 +15,10 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-
+    <!-- <link rel="icon" href="../img/smarishjortbkg.png"> -->
+    <link rel="icon" href="<?= $this->asset($backgroundiconimg) ?>">
+    <!-- <link rel="apple-touch-icon" href="../smarishjortbkg.png" />
+    <link rel=”apple-touch-icon-precomposed” href="../smarishjortbkg.png"/> -->
     <!-- <link rel="stylesheet" href=<?= $stylepath ?>> -->
     <?php foreach ($stylesheets as $stylesheet) : ?>
     <link rel="stylesheet" type="text/css" href="<?= $this->asset($stylesheet) ?>">

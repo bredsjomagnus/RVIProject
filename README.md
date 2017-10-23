@@ -19,7 +19,7 @@ Ett skolarbete som bygger på modulen maaa16/commentary
 
 composer require maaa16/commentary
 
-Konfigurationsfiler
+#### Konfigurationsfiler
 
 rsync -av vendor/maaa16/commentary/config/commentary* config
 

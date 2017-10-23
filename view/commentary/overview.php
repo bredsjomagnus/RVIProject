@@ -11,6 +11,8 @@ $comm       = $this->di->get("comm");
 ?>
 <div class="container">
     <div class="row">
+        <!-- <?= var_dump($useractivity) ?><br>
+        <?= var_dump($useractivityall) ?> -->
         <div class="col-md-12">
             <?= $tagbar ?>
         </div>
@@ -22,7 +24,7 @@ $comm       = $this->di->get("comm");
                 <thead>
                     <tr>
                         <th>Svar</th>
-                        <th>Rank</th>
+                        <th>Rang</th>
                         <th>Röster</th>
                         <th>Kommentarer</th>
                         <th>Fråga</th>
@@ -74,7 +76,7 @@ $comm       = $this->di->get("comm");
             <table class='table'>
                 <thead>
                     <tr>
-                        <th>Rank</th>
+                        <th>Rang</th>
                         <th>Röster</th>
                         <th>Kommentarer</th>
                         <th>Svar på fråga</th>
@@ -136,7 +138,7 @@ $comm       = $this->di->get("comm");
                         <th>Svar</th>
                         <th>Kommentarer</th>
                         <th>Aktivitet</th>
-                        <th>Rank</th>
+                        <th>Rang</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -190,7 +192,7 @@ $comm       = $this->di->get("comm");
                         <th>Svar</th>
                         <th>Kommentarer</th>
                         <th>Aktivitet</th>
-                        <th>Rank</th>
+                        <th>Rang</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -221,7 +223,7 @@ $comm       = $this->di->get("comm");
                         <td align='center'><?= $numbarticles ?></td>
                         <td><?= $numbanswers ?></td>
                         <td><?= $numbcomments ?></td>
-                        <td><?= $useractivity[$rankuser->id] ?></td>
+                        <td><?= $useractivityall[$rankuser->id] ?></td>
                         <td><?= $rank ?></td>
                     </tr>
                 <?php endforeach; ?>

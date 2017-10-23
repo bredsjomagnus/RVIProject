@@ -59,8 +59,16 @@ class Navbar implements ConfigureInterface, InjectionAwareInterface
                 // Om man kommer till logout och man är inloggad så visa den knappen
                 $navhtml .= "<li style='float: right'><a class='{$class}' href='". $this->di->get("url")->create($link['route']) ."#top'>".$link['text']."</a></li>";
 
+                // $path_parts = pathinfo('/www/htdocs/inc/lib.inc.php');
+                // $path_parts['dirname']
+                $pathinfoarray = explode("/", $_SERVER['PATH_INFO']);
+                if (count($pathinfoarray) > 2) {
+                    $pathinfo = $pathinfoarray[2];
+                } else {
+                    $pathinfo = $pathinfoarray[1];
+                }
                 // För att se om accountinfo är aktiv eller inte kontrolleras route via PATH_INFO¨.
-                $accountclass = ((isset($_SERVER['PATH_INFO'])) && $_SERVER['PATH_INFO'] == "accountinfo") ? "navactive" : "notnavacitve";
+                $accountclass = ((isset($_SERVER['PATH_INFO'])) && ($pathinfo == "userinfo" || $pathinfo == "accountinfo")) ? "navactive" : "notnavacitve";
                 $navhtml .= "<li style='float: right'><a class='{$accountclass}' href='". $this->di->get("url")->create('commentary/userinfo/'.$this->di->get("session")->get("userid")) ."#top'>". $this->di->get("cookie")->get('firstname', "") ."</a></li>";
             }
         }
